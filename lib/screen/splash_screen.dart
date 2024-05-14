@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:final_assignment/screen/login.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,7 +26,16 @@ class _SplashScreenState extends State<SplashScreen>
       begin: 0.0,
       end: 1.0,
     ).animate(_controller);
-    _controller.forward();
+    _controller.forward().then((_) {
+      // After animation completes, navigate to the Login screen
+      Timer(const Duration(seconds: 5), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const Login(),
+          ),
+        );
+      });
+    });
   }
 
   @override
@@ -38,14 +50,14 @@ class _SplashScreenState extends State<SplashScreen>
       appBar: AppBar(),
       backgroundColor: Colors.white,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SizedBox(),
           Center(
             child: FadeTransition(
               opacity: _animation,
               child: Image.asset(
-                'assets/images/logo.png.png',
+                'assets/images/logo.png',
                 width: 100,
                 height: 180,
               ),
