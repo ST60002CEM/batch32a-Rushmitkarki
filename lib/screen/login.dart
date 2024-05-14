@@ -14,39 +14,48 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Login to explore..',
+          style: TextStyle(color: Color.fromARGB(255, 21, 22, 22)),
+        ),
+        centerTitle: true,
+      ),
       body: Column(
         children: [
-          const Expanded(
-            flex: 1,
-            child: SizedBox(
-              height: 10,
-            ),
-          ),
           Expanded(
             flex: 7,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
+            child: SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40.0),
+                    topRight: Radius.circular(40.0),
+                  ),
                 ),
-              ),
-              child: SingleChildScrollView(
                 child: Form(
                   key: _formSignInKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Welcome back',
-                        style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w900,
-                            // color: lightColorScheme.primary,
-                            color: Colors.black),
+                      Image.asset(
+                        'assets/images/logo.png',
+                        height: 80,
                       ),
+                      const SizedBox(
+                        height: 1.0,
+                      ),
+
+                      // const Text(
+                      //   'Welcome back',
+                      //   style: TextStyle(
+                      //       fontSize: 30.0,
+                      //       fontWeight: FontWeight.w900,
+                      //       // color: lightColorScheme.primary,
+                      //       color: Colors.black),
+                      // ),
                       const SizedBox(
                         height: 40.0,
                       ),
@@ -58,8 +67,11 @@ class _LoginState extends State<Login> {
                           return null;
                         },
                         decoration: InputDecoration(
-                          label: const Text('Email'),
+                          label: const Text(
+                            'Email',
+                          ),
                           hintText: 'Enter Email',
+                          prefixIcon: const Icon(Icons.email),
                           hintStyle: const TextStyle(
                             color: Colors.black26,
                           ),
@@ -92,6 +104,7 @@ class _LoginState extends State<Login> {
                         decoration: InputDecoration(
                           label: const Text('Password'),
                           hintText: 'Enter Password',
+                          prefixIcon: const Icon(Icons.lock),
                           hintStyle: const TextStyle(
                             color: Colors.black26,
                           ),
@@ -169,7 +182,7 @@ class _LoginState extends State<Login> {
                               );
                             }
                           },
-                          child: const Text('Sign up'),
+                          child: const Text('Login'),
                         ),
                       ),
                       const SizedBox(
@@ -190,7 +203,7 @@ class _LoginState extends State<Login> {
                               horizontal: 10,
                             ),
                             child: Text(
-                              'Sign up with',
+                              'Continue with',
                               style: TextStyle(
                                 color: Colors.black45,
                               ),
@@ -210,6 +223,24 @@ class _LoginState extends State<Login> {
                       const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          Icon(
+                            Icons.facebook,
+                            color: Colors.blue,
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.mail,
+                                color: Colors.pink,
+                              ),
+                              Text('Mail'),
+                            ],
+                          ),
+                          Icon(
+                            Icons.apple,
+                            color: Colors.black,
+                          ),
+
                           // Logo(Logos.facebook),
                           // Logo(Logos.twitter),
                           // Logo(Logos.google),
