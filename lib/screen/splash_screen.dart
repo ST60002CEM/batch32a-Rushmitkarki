@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen>
     ).animate(_controller);
     _controller.forward().then((_) {
       // After animation completes, navigate to the Login screen
-      Timer(const Duration(seconds: 5), () {
+      Timer(const Duration(seconds: 4), () {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => const Login(),

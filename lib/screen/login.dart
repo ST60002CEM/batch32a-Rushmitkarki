@@ -1,3 +1,4 @@
+import 'package:final_assignment/screen/dashboard_screen.dart';
 import 'package:final_assignment/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,16 +11,20 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formSignInKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool rememberPassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Login to explore..',
-          style: TextStyle(color: Color.fromARGB(255, 21, 22, 22)),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 12, 41, 91),
       ),
       body: Column(
         children: [
@@ -47,19 +52,11 @@ class _LoginState extends State<Login> {
                       const SizedBox(
                         height: 1.0,
                       ),
-
-                      // const Text(
-                      //   'Welcome back',
-                      //   style: TextStyle(
-                      //       fontSize: 30.0,
-                      //       fontWeight: FontWeight.w900,
-                      //       // color: lightColorScheme.primary,
-                      //       color: Colors.black),
-                      // ),
                       const SizedBox(
                         height: 40.0,
                       ),
                       TextFormField(
+                        controller: _emailController,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter Email';
@@ -93,6 +90,7 @@ class _LoginState extends State<Login> {
                         height: 25.0,
                       ),
                       TextFormField(
+                        controller: _passwordController,
                         obscureText: true,
                         obscuringCharacter: '*',
                         validator: (value) {
@@ -169,21 +167,65 @@ class _LoginState extends State<Login> {
                           onPressed: () {
                             if (_formSignInKey.currentState!.validate() &&
                                 rememberPassword) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Processing Data'),
-                                ),
-                              );
+                              // Check if email and password match admin credentials
+                              if (_emailController.text == 'admin@gmail.com' &&
+                                  _passwordController.text == 'admin') {
+                                // Navigate to dashboard screen if credentials match
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DashboardScreen(),
+                                  ),
+                                );
+                              } else {
+                                // Show error message if credentials don't match
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Invalid email or password'),
+                                  ),
+                                );
+                              }
                             } else if (!rememberPassword) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    content: Text(
-                                        'Please agree to the processing of personal data')),
+                                  content: Text(
+                                      'Please agree to the processing of personal data'),
+                                ),
                               );
                             }
                           },
                           child: const Text('Login'),
                         ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Don\'t have an account? ',
+                            style: TextStyle(
+                              color: Colors.black45,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterScreen(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'Sign up',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                // color: lightColorScheme.primary,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 25.0,
@@ -240,48 +282,10 @@ class _LoginState extends State<Login> {
                             Icons.apple,
                             color: Colors.black,
                           ),
-
-                          // Logo(Logos.facebook),
-                          // Logo(Logos.twitter),
-                          // Logo(Logos.google),
-                          // Logo(Logos.apple),
                         ],
                       ),
                       const SizedBox(
                         height: 25.0,
-                      ),
-                      // don't have an account
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Don\'t have an account? ',
-                            style: TextStyle(
-                              color: Colors.black45,
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (e) => const RegisterScreen(),
-                                ),
-                              );
-                            },
-                            child: const Text(
-                              'Sign up',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                // color: lightColorScheme.primary,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20.0,
                       ),
                     ],
                   ),
