@@ -36,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(' This is Dashboard Screen'),
+                      Text(' Welcome is Dashboard Screen'),
                     ],
                   ),
                 ),
