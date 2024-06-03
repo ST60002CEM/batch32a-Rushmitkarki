@@ -1,4 +1,4 @@
-import 'package:final_assignment/screen/dashboard_screen.dart';
+import 'package:final_assignment/screen/buttom_screen/dashboard_screen.dart';
 import 'package:final_assignment/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,6 @@ class _LoginState extends State<Login> {
               child: Container(
                 padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
                 decoration: const BoxDecoration(
-                  color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40.0),
                     topRight: Radius.circular(40.0),
@@ -63,26 +62,14 @@ class _LoginState extends State<Login> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(
-                          label: const Text(
+                        decoration: const InputDecoration(
+                          label: Text(
                             'Email',
                           ),
                           hintText: 'Enter Email',
-                          prefixIcon: const Icon(Icons.email),
-                          hintStyle: const TextStyle(
+                          prefixIcon: Icon(Icons.email),
+                          hintStyle: TextStyle(
                             color: Colors.black26,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
-                            ),
-                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
@@ -99,24 +86,12 @@ class _LoginState extends State<Login> {
                           }
                           return null;
                         },
-                        decoration: InputDecoration(
-                          label: const Text('Password'),
+                        decoration: const InputDecoration(
+                          label: Text('Password'),
                           hintText: 'Enter Password',
-                          prefixIcon: const Icon(Icons.lock),
-                          hintStyle: const TextStyle(
+                          prefixIcon: Icon(Icons.lock),
+                          hintStyle: TextStyle(
                             color: Colors.black26,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.black12, // Default border color
-                            ),
-                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
@@ -140,9 +115,6 @@ class _LoginState extends State<Login> {
                               ),
                               const Text(
                                 'Remember me',
-                                style: TextStyle(
-                                  color: Colors.black45,
-                                ),
                               ),
                             ],
                           ),
@@ -150,9 +122,9 @@ class _LoginState extends State<Login> {
                             child: const Text(
                               'Forget password?',
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat',
                                 // color: lightColorScheme.primary,
-                                color: Colors.black,
+                                color: Colors.blueAccent,
                               ),
                             ),
                           ),
@@ -203,9 +175,6 @@ class _LoginState extends State<Login> {
                         children: [
                           const Text(
                             'Don\'t have an account? ',
-                            style: TextStyle(
-                              color: Colors.black45,
-                            ),
                           ),
                           GestureDetector(
                             onTap: () {
@@ -221,7 +190,6 @@ class _LoginState extends State<Login> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 // color: lightColorScheme.primary,
-                                color: Colors.black,
                               ),
                             ),
                           ),
@@ -246,9 +214,6 @@ class _LoginState extends State<Login> {
                             ),
                             child: Text(
                               'Continue with',
-                              style: TextStyle(
-                                color: Colors.black45,
-                              ),
                             ),
                           ),
                           Expanded(
