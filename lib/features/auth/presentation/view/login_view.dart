@@ -139,25 +139,23 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           onPressed: () {
                             if (_formSignInKey.currentState!.validate() &&
                                 rememberPassword) {
+                              ref
+                                  .read(loginViewModelProvider.notifier)
+                                  .loginUser(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
+
                               // Check if email and password match admin credentials
-                              if (_emailController.text == 'admin@gmail.com' &&
-                                  _passwordController.text == 'admin') {
-                                // Navigate to dashboard screen if credentials match
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         const DashboardScreen(),
-                                //   ),
-                                // );
-                              } else {
-                                // Show error message if credentials don't match
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Invalid email or password'),
-                                  ),
-                                );
-                              }
+
+                              // Navigate to dashboard screen if credentials match
+                              // Navigator.pushReplacement(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         const DashboardScreen(),
+                              //   ),
+                              // );
                             } else if (!rememberPassword) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(

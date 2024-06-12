@@ -44,4 +44,6 @@ class HiveService {
         orElse: () => AuthHiveModel.empty());
     return user;
   }
+
+  login(String email, String password) {}
 }

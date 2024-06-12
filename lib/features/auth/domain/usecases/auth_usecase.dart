@@ -16,4 +16,7 @@ class AuthUseCase {
   Future<Either<Failure, bool>> registerUser(AuthEntity auth) {
     return authRepository.registerUser(auth);
   }
+  Future<Either<Failure, bool>> loginUser(String user, String password) {
+    return authRepository.loginUser(user, password);
+  }
 }

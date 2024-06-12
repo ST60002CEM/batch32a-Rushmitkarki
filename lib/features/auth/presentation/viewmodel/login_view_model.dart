@@ -15,4 +15,6 @@ class LoginViewModel extends StateNotifier<void> {
   void openRegisterView() {
     navigator.openRegisterView();
   }
+
+  void loginUser({required String email, required String password}) {}
 }
