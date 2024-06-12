@@ -23,4 +23,25 @@ class HiveService {
     var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.userBox);
     await box.put(user.userId, user);
   }
+
+  // login Query
+  Future<AuthHiveModel?> loginUser(String email, String password) async {
+    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.userBox);
+    var user = box.values.firstWhere(
+        (element) => element.email == email && element.password == password,
+        orElse: () => AuthHiveModel.empty());
+    return user;
+  }
+  // logout Query
+  Future<void> logoutUser() async {
+    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.userBox);
+    await box.clear();
+  }
+  // getuser by email
+  Future<AuthHiveModel?> getUserByEmail(String email) async {
+    var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.userBox);
+    var user = box.values.firstWhere((element) => element.email == email,
+        orElse: () => AuthHiveModel.empty());
+    return user;
+  }
 }

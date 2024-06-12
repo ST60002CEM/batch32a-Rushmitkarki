@@ -22,8 +22,14 @@ class AuthLocalDataSource {
   Future<Either<Failure, bool>> registerUser(AuthEntity user) async {
     try {
       //If already email throw error
+      final userByEmail = await hiveSerice.getUserByEmail(user.email);
+      if (userByEmail != null) {
+        return Left(Failure(error: 'Email already exist'));
+      }
+      
 
       // Convert Entity to model
+      
       final hiveUser = authHiveModel.fromEntity(user);
       await hiveSerice.registerUser(hiveUser);
       return const Right(true);
