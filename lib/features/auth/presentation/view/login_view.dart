@@ -1,3 +1,4 @@
+import 'package:final_assignment/features/auth/presentation/viewmodel/auth_view_model.dart';
 import 'package:final_assignment/features/auth/presentation/viewmodel/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -135,15 +136,15 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       ),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton( 
+                        child: ElevatedButton(
                           onPressed: () {
                             if (_formSignInKey.currentState!.validate() &&
                                 rememberPassword) {
                               ref
-                                  .read(loginViewModelProvider.notifier)
+                                  .read(authViewModelProvider.notifier)
                                   .loginUser(
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
+                                    _emailController.text,
+                                    _passwordController.text,
                                   );
 
                               // Check if email and password match admin credentials

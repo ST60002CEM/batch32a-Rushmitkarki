@@ -46,7 +46,7 @@ class HiveService {
       (element) => element.email == email,
       orElse: () => AuthHiveModel.empty(),
     );
-    print(user);
+
     return user;
   }
 }
