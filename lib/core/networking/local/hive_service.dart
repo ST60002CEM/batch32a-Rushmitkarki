@@ -32,18 +32,21 @@ class HiveService {
         orElse: () => AuthHiveModel.empty());
     return user;
   }
+
   // logout Query
   Future<void> logoutUser() async {
     var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.userBox);
     await box.clear();
   }
+
   // getuser by email
   Future<AuthHiveModel?> getUserByEmail(String email) async {
     var box = await Hive.openBox<AuthHiveModel>(HiveTableConstant.userBox);
-    var user = box.values.firstWhere((element) => element.email == email,
-        orElse: () => AuthHiveModel.empty());
+    var user = box.values.firstWhere(
+      (element) => element.email == email,
+      orElse: () => AuthHiveModel.empty(),
+    );
+    print(user);
     return user;
   }
-
-  login(String email, String password) {}
 }

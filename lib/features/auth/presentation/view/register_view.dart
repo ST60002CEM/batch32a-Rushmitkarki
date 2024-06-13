@@ -48,6 +48,7 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextField(
+                        controller: firstNameController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -61,6 +62,7 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                       ),
                       const SizedBox(height: 20.0),
                       TextField(
+                        controller: lastNameController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -74,6 +76,7 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                       ),
                       const SizedBox(height: 20.0),
                       TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -87,6 +90,7 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                       ),
                       const SizedBox(height: 20.0),
                       TextField(
+                        controller: passwordController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -120,6 +124,7 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                               lName: lastNameController.text,
                               email: emailController.text,
                               password: passwordController.text);
+
                           ref
                               .read(authViewModelProvider.notifier)
                               .registerUser(authEntity);

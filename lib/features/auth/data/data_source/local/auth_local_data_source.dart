@@ -23,14 +23,13 @@ class AuthLocalDataSource {
     try {
       //If already email throw error
       final userByEmail = await hiveService.getUserByEmail(user.email);
-      if (userByEmail != null) {
-        return Left(Failure(error: 'Email already exist'));
+      if (userByEmail!.email.isNotEmpty) {
+        return Left(Failure(error: 'User already exist'));
       }
-      
 
       // Convert Entity to model
-      
       final hiveUser = authHiveModel.fromEntity(user);
+
       await hiveService.registerUser(hiveUser);
       return const Right(true);
     } catch (e) {
@@ -38,11 +37,11 @@ class AuthLocalDataSource {
     }
   }
   // login
-  
-Future<Either<Failure, bool>> loginUser(String email, String password) async {
+
+  Future<Either<Failure, bool>> loginUser(String email, String password) async {
     try {
-      final user = await hiveService.login(email, password);
- 
+      final user = await hiveService.loginUser(email, password);
+
       if (user?.email.isEmpty ?? true) {
         return Left(Failure(error: 'User not found'));
       }

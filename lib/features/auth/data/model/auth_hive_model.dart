@@ -52,10 +52,10 @@ class AuthHiveModel {
 
   AuthHiveModel fromEntity(AuthEntity entity) => AuthHiveModel(
         userId: const Uuid().v4(),
-        fName: fName,
-        lName: lName,
-        email: email,
-        password: password,
+        fName: entity.fName,
+        lName: entity.lName,
+        email: entity.email,
+        password: entity.password,
       );
 
   List<AuthEntity> toEntities(List<AuthHiveModel> models) =>
