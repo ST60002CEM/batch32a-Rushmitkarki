@@ -1,5 +1,6 @@
-import 'package:final_assignment/screen/splash_screen.dart';
-import 'package:final_assignment/theme/theme_data.dart';
+import 'package:final_assignment/app/navigator_key/navigator_key.dart';
+import 'package:final_assignment/app/themes/theme.dart';
+import 'package:final_assignment/features/splash/presentation/view/splash_view.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -8,9 +9,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const SplashScreen(),
+      navigatorKey: AppNavigator.navigatorKey,
+      theme: ThemeData(
+        colorScheme: lightColorScheme,
+      ),
+      home: const SplashView(),
       debugShowCheckedModeBanner: false,
-      theme: getApplicationTheme(false),
     );
   }
 }
+//m
