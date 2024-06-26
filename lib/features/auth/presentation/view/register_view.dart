@@ -138,23 +138,7 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                       const Divider(
                         thickness: 1,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.facebook),
-                            iconSize: 40,
-                            color: Colors.blue,
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.apple),
-                            iconSize: 40,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
+                      const SizedBox(height: 20.0),
                     ],
                   ),
                 ),
