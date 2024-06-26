@@ -24,4 +24,10 @@ class AuthLocalRepository implements IAuthRepository {
   Future<Either<Failure, bool>> loginUser(String email, String password) {
     return authLocalDataSource.loginUser(email, password);
   }
+  
+  @override
+  Future<Either<Failure, bool>> registerDoctor(AuthEntity doctor) {
+    // TODO: implement registerDoctor
+    throw UnimplementedError();
+  }
 }

@@ -9,4 +9,7 @@ class ApiEndPoints {
   // --------------------------Auth Routes--------------------------
   static const String loginUser = "user/login";
   static const String registerUser = "user/create";
+
+  // --------------------------Doctor Routes--------------------------
+  static const String getDoctors = "doctor/get_all_doctors";
 }
