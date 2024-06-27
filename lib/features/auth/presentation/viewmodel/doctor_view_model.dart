@@ -1,9 +1,10 @@
+
+
 import 'package:final_assignment/features/auth/data/data_source/remote/doctor_remote_data_source.dart';
 import 'package:final_assignment/features/auth/presentation/state/doctor_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final doctorViewModelProvider =
-    StateNotifierProvider<DoctorViewModel, DoctorState>(
+final doctorViewModelProvider = StateNotifierProvider<DoctorViewModel, DoctorState>(
   (ref) {
     final doctorRemoteDataSource = ref.read(doctorRemoteDataSourceProvider);
     return DoctorViewModel(doctorRemoteDataSource);
@@ -12,12 +13,10 @@ final doctorViewModelProvider =
 
 class DoctorViewModel extends StateNotifier<DoctorState> {
   final DoctorRemoteDataSource _doctorRemoteDataSource;
-  DoctorViewModel(this._doctorRemoteDataSource)
-      : super(
-          DoctorState.initial(),
-        ) {
+  DoctorViewModel(this._doctorRemoteDataSource) : super(DoctorState.initial()) {
     getDoctors();
   }
+
   Future resetState() async {
     state = DoctorState.initial();
     getDoctors();
@@ -29,12 +28,11 @@ class DoctorViewModel extends StateNotifier<DoctorState> {
     final page = currentState.page + 1;
     final doctors = currentState.doctors;
     final hasReachedMax = currentState.hasReachedMax;
-    if (hasReachedMax) {
+    if (!hasReachedMax) {
       // get data from data source
       final result = await _doctorRemoteDataSource.getDoctors(page);
       result.fold(
-        (failure) =>
-            state = state.copyWith(hasReachedMax: true, isLoading: false),
+        (failure) => state = state.copyWith(hasReachedMax: true, isLoading: false),
         (data) {
           if (data.isEmpty) {
             state = state.copyWith(hasReachedMax: true);
