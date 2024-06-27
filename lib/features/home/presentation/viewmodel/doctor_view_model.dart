@@ -1,7 +1,7 @@
 
 
-import 'package:final_assignment/features/auth/data/data_source/remote/doctor_remote_data_source.dart';
-import 'package:final_assignment/features/auth/presentation/state/doctor_state.dart';
+import 'package:final_assignment/features/home/data/data_source/remote/doctor_remote_data_source.dart';
+import 'package:final_assignment/features/home/presentation/state/doctor_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final doctorViewModelProvider = StateNotifierProvider<DoctorViewModel, DoctorState>(

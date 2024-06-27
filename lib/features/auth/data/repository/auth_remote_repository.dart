@@ -28,7 +28,7 @@ class AuthRemoteRepository implements IAuthRepository {
   
   @override
   Future<Either<Failure, bool>> registerDoctor(AuthEntity doctor) {
-    // TODO: implement registerDoctor
+    
     throw UnimplementedError();
   }
 }

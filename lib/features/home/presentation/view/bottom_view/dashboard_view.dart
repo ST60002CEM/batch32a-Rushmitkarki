@@ -1,7 +1,7 @@
 // lib/features/auth/presentation/view/dashboard_view.dart
 
 import 'package:final_assignment/core/common/show_my_snackbar.dart';
-import 'package:final_assignment/features/auth/presentation/viewmodel/doctor_view_model.dart';
+import 'package:final_assignment/features/home/presentation/viewmodel/doctor_view_model.dart';
 import 'package:final_assignment/features/home/presentation/viewmodel/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

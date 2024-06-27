@@ -1,4 +1,4 @@
-import 'package:final_assignment/features/auth/domain/entity/doctor_entity.dart';
+import 'package:final_assignment/features/home/domain/entity/doctor_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'doctor_api_model.g.dart';

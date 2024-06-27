@@ -20,7 +20,5 @@ class AuthUseCase {
     return authRepository.loginUser(user, password);
   }
   // doctor
-  Future<Either<Failure, bool>> registerDoctor(AuthEntity doctor) {
-    return authRepository.registerDoctor(doctor);
-  }
+ 
 }

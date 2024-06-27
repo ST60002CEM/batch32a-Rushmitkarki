@@ -1,4 +1,4 @@
-import 'package:final_assignment/features/auth/data/model/doctor_api_model.dart';
+import 'package:final_assignment/features/home/data/model/doctor_api_model.dart';
 
 class DoctorState {
   final List<DoctorApiModel> doctors;
