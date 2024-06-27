@@ -2,39 +2,34 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:final_assignment/app/constants/api_endpoint.dart';
 import 'package:final_assignment/core/failure/failure.dart';
-import 'package:final_assignment/core/shared_prefs/user_shared_prefs.dart';
+import 'package:final_assignment/core/networking/remote/http_service.dart';
 import 'package:final_assignment/features/auth/data/model/doctor_api_model.dart';
-import 'package:final_assignment/features/auth/domain/entity/doctor_entity.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final doctorRemoteDataSourceProvider = Provider<DoctorRemoteDataSource>((ref) {
+  return DoctorRemoteDataSource(ref.watch(httpServiceProvider));
+});
 class DoctorRemoteDataSource {
-  final Dio dio;
-  final DoctorApiModel doctorApiModel;
-  final UserSharedPrefs userSharedPrefs;
+  final Dio _dio;
+  DoctorRemoteDataSource(this._dio);
 
-  DoctorRemoteDataSource({
-    required this.userSharedPrefs,
-    required this.dio,
-    required this.doctorApiModel,
-  });
-  Future<Either<Failure, bool>> registerDoctor(DoctorEntity doctorEntity) async {
-    try {
-      Response response = await dio.post(
-        ApiEndPoints.registerDoctor,
-        data: doctorApiModel.fromEntity(doctorEntity).toJson(),
+  // get data from post with pagination
+  Future<Either<Failure, List<DoctorApiModel>>> getDoctors(int page) async{
+    try{
+      final response = await _dio.get(
+        ApiEndPoints.getDoctors,
+        queryParameters: {
+          '_page' : page,
+          '_limit' : ApiEndPoints.paginationDoctors,
+        },
+
       );
-      if (response.statusCode == 201) {
-        return const Right(true);
-      }
-      return Left(
-        Failure(
-            error: response.data['message'],
-            statusCode: response.statusCode.toString()),
-      );
-    } on DioException catch (e) {
+      final data = response.data as List;
+      final doctors = data.map((e) => DoctorApiModel.fromJson(e)).toList();
+      return Right(doctors);
+    }on DioException catch(e){
       return Left(Failure(error: e.error.toString()));
     }
+
   }
-  
-  
-  
 }

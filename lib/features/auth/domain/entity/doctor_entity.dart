@@ -6,7 +6,6 @@ class DoctorEntity {
   final String doctorFee;
   final String doctorImage;
 
-
   DoctorEntity({
     this.doctorid,
     required this.doctorName,
@@ -15,7 +14,7 @@ class DoctorEntity {
     required this.doctorFee,
     required this.doctorImage,
   });
-  @override
+
   List<Object?> get props => [
         doctorid,
         doctorName,

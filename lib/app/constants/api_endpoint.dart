@@ -12,4 +12,5 @@ class ApiEndPoints {
 
   // --------------------------Doctor Routes--------------------------
   static const String getDoctors = "doctor/get_all_doctors";
+  static const String paginationDoctors = "doctor/pagination";
 }
