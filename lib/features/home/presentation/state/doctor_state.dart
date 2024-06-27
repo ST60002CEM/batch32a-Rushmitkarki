@@ -1,4 +1,3 @@
-import 'package:final_assignment/features/home/data/model/doctor_api_model.dart';
 import 'package:final_assignment/features/home/domain/entity/doctor_entity.dart';
 
 class DoctorState {
