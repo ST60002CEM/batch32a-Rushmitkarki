@@ -1,19 +1,20 @@
-
-
-import 'package:final_assignment/features/home/data/data_source/remote/doctor_remote_data_source.dart';
+import 'package:final_assignment/core/common/show_my_snackbar.dart';
+import 'package:final_assignment/features/home/domain/usecases/doctor_usecase.dart';
 import 'package:final_assignment/features/home/presentation/state/doctor_state.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final doctorViewModelProvider = StateNotifierProvider<DoctorViewModel, DoctorState>(
+final doctorViewModelProvider =
+    StateNotifierProvider<DoctorViewModel, DoctorState>(
   (ref) {
-    final doctorRemoteDataSource = ref.read(doctorRemoteDataSourceProvider);
-    return DoctorViewModel(doctorRemoteDataSource);
+    final doctorUsecase = ref.read(doctorUsecaseProvider);
+    return DoctorViewModel(doctorUsecase);
   },
 );
 
 class DoctorViewModel extends StateNotifier<DoctorState> {
-  final DoctorRemoteDataSource _doctorRemoteDataSource;
-  DoctorViewModel(this._doctorRemoteDataSource) : super(DoctorState.initial()) {
+  final DoctorUsecase _doctorUsecase;
+  DoctorViewModel(this._doctorUsecase) : super(DoctorState.initial()) {
     getDoctors();
   }
 
@@ -29,17 +30,24 @@ class DoctorViewModel extends StateNotifier<DoctorState> {
     final doctors = currentState.doctors;
     final hasReachedMax = currentState.hasReachedMax;
     if (!hasReachedMax) {
-      // get data from data source
-      final result = await _doctorRemoteDataSource.getDoctors(page);
+      final result = await _doctorUsecase.paginateDoctors(page, 6);
       result.fold(
-        (failure) => state = state.copyWith(hasReachedMax: true, isLoading: false),
+        (failure) {
+          state = state.copyWith(
+              hasReachedMax: true, isLoading: false, error: failure.error);
+
+          showMySnackBar(message: failure.error, color: Colors.red);
+        },
         (data) {
           if (data.isEmpty) {
-            state = state.copyWith(hasReachedMax: true);
+            state = state.copyWith(hasReachedMax: true, isLoading: false);
           } else {
             state = state.copyWith(
               isLoading: false,
-              doctors: [...doctors, ...data],
+              doctors: [
+                ...doctors,
+                ...data,
+              ],
               page: page,
             );
           }

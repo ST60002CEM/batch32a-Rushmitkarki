@@ -11,8 +11,8 @@ DoctorApiModel _$DoctorApiModelFromJson(Map<String, dynamic> json) =>
       id: json['_id'] as String?,
       doctorName: json['doctorName'] as String,
       doctorField: json['doctorField'] as String,
-      doctorExperience: json['doctorExperience'] as String,
-      doctorFee: json['doctorFee'] as String,
+      doctorExperience: (json['doctorExperience'] as num).toDouble(),
+      doctorFee: (json['doctorFee'] as num).toDouble(),
       doctorImage: json['doctorImage'] as String,
     );
 

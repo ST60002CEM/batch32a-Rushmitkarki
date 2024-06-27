@@ -1,7 +1,12 @@
 import 'package:final_assignment/features/home/domain/entity/doctor_entity.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'doctor_api_model.g.dart';
+
+final doctorApiModelProvider = Provider<DoctorApiModel>((ref) {
+  return const DoctorApiModel.empty();
+});
 
 @JsonSerializable()
 class DoctorApiModel {
@@ -9,8 +14,8 @@ class DoctorApiModel {
   final String? id;
   final String doctorName;
   final String doctorField;
-  final String doctorExperience;
-  final String doctorFee;
+  final double doctorExperience;
+  final double doctorFee;
   final String doctorImage;
 
   const DoctorApiModel({
@@ -21,12 +26,13 @@ class DoctorApiModel {
     required this.doctorFee,
     required this.doctorImage,
   });
+
   const DoctorApiModel.empty()
       : id = '',
         doctorName = '',
         doctorField = '',
-        doctorExperience = '',
-        doctorFee = '',
+        doctorExperience = 0,
+        doctorFee = 0,
         doctorImage = '';
 
   DoctorEntity toEntity() {
@@ -34,31 +40,17 @@ class DoctorApiModel {
       doctorid: id,
       doctorName: doctorName,
       doctorField: doctorField,
-      doctorExperience: doctorExperience,
-      doctorFee: doctorFee,
+      doctorExperience: doctorExperience.toString(),
+      doctorFee: doctorFee.toString(),
       doctorImage: doctorImage,
-    );
-  }
-
-  DoctorApiModel fromEntity(DoctorEntity entity) {
-    return DoctorApiModel(
-      doctorName: entity.doctorName,
-      doctorField: entity.doctorField,
-      doctorExperience: entity.doctorExperience,
-      doctorFee: entity.doctorFee,
-      doctorImage: entity.doctorImage,
     );
   }
 
   factory DoctorApiModel.fromJson(Map<String, dynamic> json) =>
       _$DoctorApiModelFromJson(json);
   Map<String, dynamic> toJson() => _$DoctorApiModelToJson(this);
-  List<Object?> get props => [
-        id,
-        doctorName,
-        doctorField,
-        doctorExperience,
-        doctorFee,
-        doctorImage,
-      ];
+  // to entitylist
+  List<DoctorEntity> toEntityList(List<DoctorApiModel> doctors) {
+    return doctors.map((doctor) => doctor.toEntity()).toList();
+  }
 }
