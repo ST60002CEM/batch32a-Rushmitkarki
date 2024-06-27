@@ -19,4 +19,6 @@ class AuthUseCase {
   Future<Either<Failure, bool>> loginUser(String user, String password) {
     return authRepository.loginUser(user, password);
   }
+  // doctor
+ 
 }

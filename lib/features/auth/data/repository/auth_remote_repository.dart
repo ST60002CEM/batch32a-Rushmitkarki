@@ -25,4 +25,10 @@ class AuthRemoteRepository implements IAuthRepository {
   Future<Either<Failure, bool>> registerUser(AuthEntity user) {
     return authRemoteDataSource.registerUser(user);
   }
+  
+  @override
+  Future<Either<Failure, bool>> registerDoctor(AuthEntity doctor) {
+    
+    throw UnimplementedError();
+  }
 }
