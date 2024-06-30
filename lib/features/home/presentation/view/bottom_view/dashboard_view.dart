@@ -46,7 +46,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
           actions: [
             IconButton(
               onPressed: () {
-                showMySnackBar(message: 'REF');
+                showMySnackBar(message: 'Refreshing');
                 ref.read(doctorViewModelProvider.notifier).resetState();
               },
               icon: const Icon(
