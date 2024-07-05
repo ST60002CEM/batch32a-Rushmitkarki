@@ -67,6 +67,79 @@ class AuthRemoteDataSource {
       return Left(Failure(error: e.error.toString()));
     }
   }
+  Future<Either<Failure, AuthEntity>> getMe() async {
+    try {
+      String? token;
+      final data = await userSharedPrefs.getUserToken();
+      data.fold(
+        (l) => token = null,
+        (r) => token = r,
+      );
+      Response response = await dio.get(
+        ApiEndPoints.getMe,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return Right(AuthApiModel.fromJson(response.data['data']).toEntity());
+      }
+      return Left(
+        Failure(
+            error: response.data['message'],
+            statusCode: response.statusCode.toString()),
+      );
+    } on DioException catch (e) {
+      return Left(Failure(error: e.error.toString()));
+    }
+  }
+  Future<Either<Failure, bool>> fingerPrintLogin(String id) async {
+    try {
+      Response response = await dio.post(
+        ApiEndPoints.getToken,
+        data: {'id': id},
+      );
+      if (response.statusCode == 200) {
+        final token = response.data['token'];
+        await userSharedPrefs.setUserToken(token);
+        return const Right(true);
+      }
+      return Left(
+        Failure(
+            error: response.data['message'],
+            statusCode: response.statusCode.toString()),
+      );
+    } on DioException catch (e) {
+      return Left(Failure(error: e.error.toString()));
+    }
+  }
+  Future<Either<Failure, bool>> verifyUser() async {
+    try {
+      String? token;
+      final data = await userSharedPrefs.getUserToken();
+      data.fold(
+        (l) => token = null,
+        (r) => token = r,
+      );
+      Response response = await dio.get(
+        ApiEndPoints.verifyUser,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      if (response.statusCode == 200) {
+        return const Right(true);
+      }
+      return Left(
+        Failure(
+            error: response.data['message'],
+            statusCode: response.statusCode.toString()),
+      );
+    } on DioException catch (e) {
+      return Left(Failure(error: e.error.toString()));
+    }
+  }
 
  
 }

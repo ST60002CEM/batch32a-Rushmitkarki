@@ -21,4 +21,10 @@ abstract class IAuthRepository {
   Future<Either<Failure, bool>> loginUser(String email, String password);
   // doctor
   Future<Either<Failure, bool>> registerDoctor(AuthEntity doctor);
+  Future<Either<Failure, bool>> verifyUser();
+
+  Future<Either<Failure, AuthEntity>> getCurrentUser();
+
+  Future<Either<Failure, bool>> fingerPrintLogin(String id);
+
 }
