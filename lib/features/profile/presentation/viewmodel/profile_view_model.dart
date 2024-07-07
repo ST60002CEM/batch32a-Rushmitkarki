@@ -1,10 +1,10 @@
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:final_assignment/app/navigator_key/navigator_key.dart';
-
+import 'package:final_assignment/core/common/show_my_snackbar.dart';
 import 'package:final_assignment/core/shared_prefs/user_shared_prefs.dart';
 import 'package:final_assignment/features/auth/domain/usecases/auth_usecase.dart';
-import 'package:final_assignment/features/home/presentation/state/current_state_profile.dart';
-
+import 'package:final_assignment/features/edit_profile/presentation/state/current_state_profile.dart';
+import 'package:final_assignment/features/profile/presentation/navigator/profile_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_auth/local_auth.dart';
@@ -31,9 +31,7 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
     initialize();
   }
 
-  get context => null;
   Future<void> initialize() async {
-    print('Profile viewmodel initialized');
     _localAuth = LocalAuthentication();
     await getCurrentUser();
     await checkFingerprint();
@@ -102,6 +100,7 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
   Future<void> checkFingerprint() async {
     final currentUserId = state.authEntity!.userId;
     final result = await userSharedPrefs.checkId();
+
     result.fold(
       (l) {
         state = state.copyWith(isFingerprintEnabled: false);

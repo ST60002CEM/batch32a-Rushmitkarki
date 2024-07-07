@@ -1,4 +1,4 @@
-import 'package:final_assignment/common/provider/internet_connectivity.dart';
+import 'package:final_assignment/core/provider/internet_connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

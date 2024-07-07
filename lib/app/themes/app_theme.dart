@@ -1,11 +1,9 @@
-
 import 'package:final_assignment/app/constants/theme_constant.dart';
 import 'package:flutter/material.dart';
- 
- 
+
 class AppTheme {
   AppTheme._();
- 
+
   static getApplicationTheme(bool isDark) {
     return ThemeData(
       // change the theme according to the user preference
@@ -19,7 +17,7 @@ class AppTheme {
       brightness: isDark ? Brightness.dark : Brightness.light,
       fontFamily: 'Montserrat',
       useMaterial3: true,
- 
+
       // Change app bar color
       appBarTheme: const AppBarTheme(
         elevation: 0,
@@ -30,7 +28,7 @@ class AppTheme {
           fontSize: 20,
         ),
       ),
- 
+
       // Change elevated button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -45,12 +43,7 @@ class AppTheme {
           ),
         ),
       ),
- 
-      iconButtonTheme: IconButtonThemeData(
-          style: IconButton.styleFrom(
-        foregroundColor: Colors.white,
-      )),
- 
+
       // Change text field theme
       inputDecorationTheme: const InputDecorationTheme(
         contentPadding: EdgeInsets.all(15),

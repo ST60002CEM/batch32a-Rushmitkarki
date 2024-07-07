@@ -6,7 +6,6 @@ import 'package:final_assignment/core/networking/remote/http_service.dart';
 import 'package:final_assignment/core/shared_prefs/user_shared_prefs.dart';
 import 'package:final_assignment/features/auth/data/model/auth_api_model.dart';
 import 'package:final_assignment/features/auth/domain/entity/auth_entity.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRemoteDataSourceProvider = Provider<AuthRemoteDataSource>(
@@ -67,6 +66,7 @@ class AuthRemoteDataSource {
       return Left(Failure(error: e.error.toString()));
     }
   }
+
   Future<Either<Failure, AuthEntity>> getMe() async {
     try {
       String? token;
@@ -83,7 +83,7 @@ class AuthRemoteDataSource {
       );
 
       if (response.statusCode == 200) {
-        return Right(AuthApiModel.fromJson(response.data['data']).toEntity());
+        return Right(AuthApiModel.fromJson(response.data['user']).toEntity());
       }
       return Left(
         Failure(
@@ -94,6 +94,7 @@ class AuthRemoteDataSource {
       return Left(Failure(error: e.error.toString()));
     }
   }
+
   Future<Either<Failure, bool>> fingerPrintLogin(String id) async {
     try {
       Response response = await dio.post(
@@ -114,6 +115,7 @@ class AuthRemoteDataSource {
       return Left(Failure(error: e.error.toString()));
     }
   }
+
   Future<Either<Failure, bool>> verifyUser() async {
     try {
       String? token;
@@ -140,6 +142,4 @@ class AuthRemoteDataSource {
       return Left(Failure(error: e.error.toString()));
     }
   }
-
- 
 }

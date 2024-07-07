@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:final_assignment/common/provider/internet_connectivity.dart';
+import 'package:final_assignment/core/provider/internet_connectivity.dart';
 import 'package:final_assignment/core/failure/failure.dart';
 import 'package:final_assignment/features/auth/data/repository/auth_local_repository.dart';
 import 'package:final_assignment/features/auth/data/repository/auth_remote_repository.dart';

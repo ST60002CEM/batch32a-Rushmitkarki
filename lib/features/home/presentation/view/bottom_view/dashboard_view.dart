@@ -1,5 +1,6 @@
 import 'package:final_assignment/app/constants/api_endpoint.dart';
 import 'package:final_assignment/core/common/show_my_snackbar.dart';
+import 'package:final_assignment/core/provider/theme_provider.dart';
 import 'package:final_assignment/features/home/presentation/viewmodel/doctor_view_model.dart';
 import 'package:final_assignment/features/home/presentation/viewmodel/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
           actions: [
             IconButton(
               onPressed: () {
-                showMySnackBar(message: 'Refreshing');
+                showMySnackBar(message: 'REF');
                 ref.read(doctorViewModelProvider.notifier).resetState();
               },
               icon: const Icon(
@@ -64,11 +65,9 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
               ),
             ),
             Switch(
-              value: isDark,
+              value: ref.read(themeViewModelProvider),
               onChanged: (value) {
-                setState(() {
-                  isDark = value;
-                });
+                ref.read(themeViewModelProvider.notifier).changeTheme();
               },
             ),
           ],
