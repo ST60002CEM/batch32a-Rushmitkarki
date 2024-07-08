@@ -82,7 +82,7 @@ void main() {
     expect(authState.error, isNull);
   });
 
-  // Test 2 (Register)
+  
 
  // Test 2 (register)
   test(
@@ -125,6 +125,8 @@ void main() {
       expect(state.error, null);
     },
   );
+  // test 3 (get_all_doctors)
+  
 
   tearDown(() {
     container.dispose();

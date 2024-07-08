@@ -26,11 +26,11 @@ class AuthViewModel extends StateNotifier<AuthState> {
     data.fold(
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);
-        showMySnackBar(message: l.error, color: Colors.red);
+        // showMySnackBar(message: l.error, color: Colors.red);
       },
       (r) {
         state = state.copyWith(isLoading: false);
-        showMySnackBar(message: 'Registered');
+        //showMySnackBar(message: 'Registered');
       },
     );
   }
