@@ -17,41 +17,38 @@ class DoctorViewModel extends StateNotifier<DoctorState> {
 
   DoctorViewModel(this._doctorUsecase) : super(DoctorState.initial());
 
-  Future resetState() async {
+  Future<void> resetState() async {
     state = DoctorState.initial();
-    getDoctors();
+    await getDoctors();
   }
 
-  Future getDoctors() async {
-    state = state.copyWith(isLoading: true);
-    final currentState = state;
-    final page = currentState.page + 1;
-    final doctors = currentState.doctors;
-    final hasReachedMax = currentState.hasReachedMax;
-    if (!hasReachedMax) {
-      final result = await _doctorUsecase.paginateDoctors(page, 6);
-      result.fold(
-        (failure) {
-          state = state.copyWith(
-              hasReachedMax: true, isLoading: false, error: failure.error);
+  Future<void> getDoctors() async {
+    if (state.hasReachedMax || state.isLoading) return;
 
-          showMySnackBar(message: failure.error, color: Colors.red);
-        },
-        (data) {
-          if (data.isEmpty) {
-            state = state.copyWith(hasReachedMax: true, isLoading: false);
-          } else {
-            state = state.copyWith(
-              isLoading: false,
-              doctors: [
-                ...doctors,
-                ...data,
-              ],
-              page: page,
-            );
-          }
-        },
-      );
-    }
+    state = state.copyWith(isLoading: true);
+    final page = state.page + 1;
+
+    final result = await _doctorUsecase.paginateDoctors(page, 6);
+    result.fold(
+      (failure) {
+        state = state.copyWith(
+          hasReachedMax: true,
+          isLoading: false,
+          error: failure.error,
+        );
+        showMySnackBar(message: failure.error, color: Colors.red);
+      },
+      (data) {
+        if (data.isEmpty) {
+          state = state.copyWith(hasReachedMax: true, isLoading: false);
+        } else {
+          state = state.copyWith(
+            isLoading: false,
+            doctors: [...state.doctors, ...data],
+            page: page,
+          );
+        }
+      },
+    );
   }
 }
