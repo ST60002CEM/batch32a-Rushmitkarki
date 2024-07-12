@@ -42,7 +42,7 @@ class DoctorApiModel {
       doctorField: doctorField,
       doctorExperience: doctorExperience.toString(),
       doctorFee: doctorFee.toString(),
-      doctorImage: doctorImage,
+      doctorImage: doctorImage, 
     );
   }
 

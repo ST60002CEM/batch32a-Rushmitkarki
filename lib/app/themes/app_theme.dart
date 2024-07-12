@@ -1,42 +1,39 @@
-
-import 'package:final_assignment/app/constants/theme_constant.dart';
 import 'package:flutter/material.dart';
- 
- 
+
 class AppTheme {
   AppTheme._();
- 
+
   static getApplicationTheme(bool isDark) {
     return ThemeData(
       // change the theme according to the user preference
       colorScheme: isDark
           ? const ColorScheme.dark(
-              primary: ThemeConstant.darkPrimaryColor,
+              primary: Color.fromARGB(255, 244, 245, 246),
             )
           : const ColorScheme.light(
-              primary: Color.fromARGB(255, 17, 119, 20),
+              primary: Color.fromARGB(255, 21, 64, 139),
             ),
       brightness: isDark ? Brightness.dark : Brightness.light,
-      fontFamily: 'Montserrat',
+      // fontFamily: 'Montserrat',
       useMaterial3: true,
- 
+
       // Change app bar color
       appBarTheme: const AppBarTheme(
         elevation: 0,
-        backgroundColor: ThemeConstant.appBarColor,
+        backgroundColor: Color.fromARGB(255, 29, 84, 165),
         centerTitle: true,
         titleTextStyle: TextStyle(
           color: Colors.white,
           fontSize: 20,
         ),
       ),
- 
+
       // Change elevated button theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           elevation: 0,
           foregroundColor: Colors.white,
-          backgroundColor: ThemeConstant.primaryColor,
+          backgroundColor: const Color.fromARGB(255, 21, 64, 139),
           textStyle: const TextStyle(
             fontSize: 20,
           ),
@@ -45,12 +42,7 @@ class AppTheme {
           ),
         ),
       ),
- 
-      iconButtonTheme: IconButtonThemeData(
-          style: IconButton.styleFrom(
-        foregroundColor: Colors.white,
-      )),
- 
+
       // Change text field theme
       inputDecorationTheme: const InputDecorationTheme(
         contentPadding: EdgeInsets.all(15),
@@ -65,17 +57,17 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: ThemeConstant.primaryColor,
+            color: Color.fromARGB(255, 11, 38, 84),
           ),
         ),
       ),
       // Circular progress bar theme
       progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: ThemeConstant.primaryColor,
+        color: Color.fromARGB(255, 11, 38, 84),
       ),
       //Bottom navigation bar theme
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: Colors.lightGreen,
+        backgroundColor: Color.fromARGB(255, 11, 38, 84),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.black,
         type: BottomNavigationBarType.fixed,

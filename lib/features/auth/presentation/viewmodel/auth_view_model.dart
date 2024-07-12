@@ -5,6 +5,7 @@ import 'package:final_assignment/features/auth/presentation/navigator/login_navi
 import 'package:final_assignment/features/auth/presentation/state/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:local_auth/local_auth.dart';
 
 final authViewModelProvider =
     StateNotifierProvider<AuthViewModel, AuthState>((ref) {
@@ -18,33 +19,34 @@ class AuthViewModel extends StateNotifier<AuthState> {
   final AuthUseCase authUseCase;
   final LoginViewNavigator navigator;
 
-  void registerUser(AuthEntity auth) async {
+
+  Future<void> registerUser(AuthEntity auth) async {
     state = state.copyWith(isLoading: true);
     var data = await authUseCase.registerUser(auth);
     data.fold(
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);
-        showMySnackBar(message: l.error, color: Colors.red);
+        // showMySnackBar(message: l.error, color: Colors.red);
       },
       (r) {
         state = state.copyWith(isLoading: false);
-        showMySnackBar(message: 'Registered');
+        //showMySnackBar(message: 'Registered');
       },
     );
   }
 
   void loginUser(String email, String password) async {
     state = state.copyWith(isLoading: true);
-    var data = await authUseCase.loginUser(email, password);
+    var data = await authUseCase.loginUser(email!, password!);
     data.fold(
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);
-        showMySnackBar(message: l.error, color: Colors.red);
+        // showMySnackBar(message: l.error, color: Colors.red);
       },
       (r) {
         state = state.copyWith(isLoading: false);
-        showMySnackBar(
-            message: 'User Logged In Successfully', color: Colors.green);
+        // showMySnackBar(
+        //     message: 'User Logged In Successfully', color: Colors.green);
         navigator.openHomeView();
       },
     );
@@ -52,5 +54,42 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   void obscurePassword() {
     state = state.copyWith(isObscure: !state.isObscure);
+  }
+
+  Future<void> fingerPrintLogin() async {
+    final _localAuth = LocalAuthentication();
+
+    bool authenticated = false;
+    try {
+      authenticated = await _localAuth.authenticate(
+        localizedReason: 'Authenticate to enable fingerprint',
+        options: const AuthenticationOptions(
+          stickyAuth: true,
+          biometricOnly: true,
+          useErrorDialogs: true,
+        ),
+      );
+    } catch (e) {
+     
+      showMySnackBar(
+          message: 'Fingerprint authentication fail failed', color: Colors.red);
+    }
+
+    if (authenticated) {
+      authUseCase.fingerPrintLogin().then((data) {
+        data.fold(
+          (l) {
+            showMySnackBar(message: l.error, color: Colors.red);
+          },
+          (r) {
+            showMySnackBar(message: "User logged in successfully");
+            navigator.openHomeView();
+          },
+        );
+      });
+    } else {
+      showMySnackBar(
+          message: 'Fingerprint authentication failed', color: Colors.red);
+    }
   }
 }

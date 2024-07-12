@@ -12,7 +12,7 @@ class DoctorEntity {
     required this.doctorField,
     required this.doctorExperience,
     required this.doctorFee,
-    required this.doctorImage,
+    required this.doctorImage, 
   });
 
   List<Object?> get props => [

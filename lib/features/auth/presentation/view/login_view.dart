@@ -169,6 +169,21 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           child: const Text('Login'),
                         ),
                       ),
+                      // ============================== Sensor for biometric =======================
+                      Center(
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.fingerprint,
+                          ),
+                          onPressed: () {
+                            ref 
+                            .read(authViewModelProvider.notifier)
+                            .fingerPrintLogin();
+                          
+                          },
+                        ),
+                      ),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

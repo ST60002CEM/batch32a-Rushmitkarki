@@ -12,7 +12,7 @@ class AuthEntity extends Equatable {
     required this.fName,
     required this.lName,
     required this.email,
-    required this.password,
+    required this.password, 
   });
 
   @override

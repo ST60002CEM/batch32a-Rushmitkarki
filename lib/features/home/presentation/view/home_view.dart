@@ -2,7 +2,7 @@ import 'package:final_assignment/features/home/presentation/view/bottom_view/cha
 import 'package:final_assignment/features/home/presentation/view/bottom_view/dashboard_view.dart';
 import 'package:final_assignment/features/home/presentation/view/bottom_view/explore_view.dart';
 import 'package:final_assignment/features/home/presentation/view/bottom_view/search_view.dart';
-import 'package:final_assignment/features/home/presentation/view/bottom_view/profile_view.dart';
+import 'package:final_assignment/features/profile/presentation/view/profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
