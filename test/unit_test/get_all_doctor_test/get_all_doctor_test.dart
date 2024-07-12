@@ -29,8 +29,6 @@ void main() {
   });
 
   test('DoctorViewModel getAllDoctors test', () async {
-    final doctorViewModel = container.read(doctorViewModelProvider.notifier);
-
     // Mock data for getAllDoctors
     final doctorsList = List<DoctorEntity>.generate(
       6,
@@ -44,41 +42,51 @@ void main() {
       ),
     );
 
-   
-    when(mockDoctorUsecase.getAllDoctors()).thenAnswer(
-      (_) async => Right(doctorsList),
-    );
+    when(mockDoctorUsecase.paginateDoctors(1, 6))
+        .thenAnswer((_) async => Future.value(Right(doctorsList)));
 
-    // Explicitly call getDoctors
-    await doctorViewModel.getDoctors();
+    await container.read(doctorViewModelProvider.notifier).getDoctors();
+
     expect(
         container.read(doctorViewModelProvider).doctors, equals(doctorsList));
 
-   
-    verify(mockDoctorUsecase.getAllDoctors()).called(1);
+    verify(mockDoctorUsecase.paginateDoctors(1, 6)).called(1);
   });
 
   test('DoctorViewModel getAllDoctors failure test', () async {
-    final doctorViewModel = container.read(doctorViewModelProvider.notifier);
+    // Mock data for getAllDoctors
 
     // Mock failure for getAllDoctors
     final failure = Failure(error: 'Failed to fetch doctors');
 
-    // Set up the mock to return failure
-    when(mockDoctorUsecase.getAllDoctors()).thenAnswer(
-      (_) async => Left(failure),
-    );
+    when(mockDoctorUsecase.paginateDoctors(any, any))
+        .thenAnswer((_) async => Future.value(
+              Left(failure),
+            ));
+    final doctorViewModel = container.read(doctorViewModelProvider.notifier);
 
     // Explicitly call getDoctors
     await doctorViewModel.getDoctors();
     expect(container.read(doctorViewModelProvider).error,
         equals('Failed to fetch doctors'));
-
-    // Verify the usecase method was called
-    verify(mockDoctorUsecase.getAllDoctors()).called(1);
   });
 
   test('DoctorViewModel paginateDoctors test', () async {
+    // Mock data for getAllDoctors
+    final doctorsList = List<DoctorEntity>.generate(
+      6,
+      (index) => DoctorEntity(
+        doctorid: index.toString(),
+        doctorName: 'Doctor $index',
+        doctorField: 'Field $index',
+        doctorExperience: '${index + 1} years',
+        doctorFee: '${index * 10} USD',
+        doctorImage: 'image_$index.png',
+      ),
+    );
+
+    when(mockDoctorUsecase.paginateDoctors(any, any))
+        .thenAnswer((_) async => Future.value(Right(doctorsList)));
     final doctorViewModel = container.read(doctorViewModelProvider.notifier);
 
     // Mock paginated data

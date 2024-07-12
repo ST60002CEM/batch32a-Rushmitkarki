@@ -36,7 +36,7 @@ class DoctorViewModel extends StateNotifier<DoctorState> {
           isLoading: false,
           error: failure.error,
         );
-        showMySnackBar(message: failure.error, color: Colors.red);
+        // showMySnackBar(message: failure.error, color: Colors.red);
       },
       (data) {
         if (data.isEmpty) {

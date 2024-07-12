@@ -24,7 +24,7 @@ class UserSharedPrefs {
     try {
       _sharedPreferences = await SharedPreferences.getInstance();
       final token = _sharedPreferences.getString('token');
-      print(token);
+     
       if (token != null) {
         return Right(token);
       } else {
