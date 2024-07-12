@@ -34,7 +34,7 @@ class DoctorRemoteDataSource {
       final doctors = doctorApiModel.toEntityList(data);
       return Right(doctors);
     } on DioException catch (e) {
-      return Left(Failure(error: e.error.toString()));
+      return Left(Failure( error:e.error.toString(), ));
     }
   }
 }

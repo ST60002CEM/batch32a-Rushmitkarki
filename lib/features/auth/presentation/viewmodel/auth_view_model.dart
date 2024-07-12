@@ -37,7 +37,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
 
   void loginUser(String email, String password) async {
     state = state.copyWith(isLoading: true);
-    var data = await authUseCase.loginUser(email!, password!);
+    var data = await authUseCase.loginUser(email, password);
     data.fold(
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);

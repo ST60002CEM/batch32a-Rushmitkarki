@@ -44,17 +44,14 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
       data.fold(
         (l) {
           state = state.copyWith(isLoading: false, error: l.error);
-         
         },
         (r) {
-        
           state = state.copyWith(isLoading: false, authEntity: r);
         },
       );
     } catch (e) {
       state = state.copyWith(
           isLoading: false, error: 'Failed to fetch current user.');
-      
     }
   }
 
@@ -98,21 +95,23 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
   }
 
   Future<void> checkFingerprint() async {
-    final currentUserId = state.authEntity!.userId;
-    final result = await userSharedPrefs.checkId();
+    final currentUserId = state.authEntity?.userId;
+    if (currentUserId != null) {
+      final result = await userSharedPrefs.checkId();
 
-    result.fold(
-      (l) {
-        state = state.copyWith(isFingerprintEnabled: false);
-      },
-      (r) {
-        if (r == currentUserId) {
-          state = state.copyWith(isFingerprintEnabled: true);
-        } else {
+      result.fold(
+        (l) {
           state = state.copyWith(isFingerprintEnabled: false);
-        }
-      },
-    );
+        },
+        (r) {
+          if (r == currentUserId) {
+            state = state.copyWith(isFingerprintEnabled: true);
+          } else {
+            state = state.copyWith(isFingerprintEnabled: false);
+          }
+        },
+      );
+    }
   }
 
   void openEditProfileView() {
