@@ -14,9 +14,8 @@ final doctorViewModelProvider =
 
 class DoctorViewModel extends StateNotifier<DoctorState> {
   final DoctorUsecase _doctorUsecase;
-  DoctorViewModel(this._doctorUsecase) : super(DoctorState.initial()) {
-    getDoctors();
-  }
+
+  DoctorViewModel(this._doctorUsecase) : super(DoctorState.initial());
 
   Future resetState() async {
     state = DoctorState.initial();

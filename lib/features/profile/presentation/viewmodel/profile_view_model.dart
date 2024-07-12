@@ -44,17 +44,17 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
       data.fold(
         (l) {
           state = state.copyWith(isLoading: false, error: l.error);
-          print('Error fetching current user: ${l.error}');
+         
         },
         (r) {
-          print('Current user: $r');
+        
           state = state.copyWith(isLoading: false, authEntity: r);
         },
       );
     } catch (e) {
       state = state.copyWith(
           isLoading: false, error: 'Failed to fetch current user.');
-      print('Error fetching current user: $e');
+      
     }
   }
 
