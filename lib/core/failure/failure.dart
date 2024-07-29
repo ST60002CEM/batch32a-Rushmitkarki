@@ -7,3 +7,6 @@ class Failure {
     this.statusCode,
   });
 }
+class ServerFailure extends Failure {
+  ServerFailure({String error = 'Server Failure'}) : super(error: error);
+}
