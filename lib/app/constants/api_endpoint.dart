@@ -18,4 +18,15 @@ class ApiEndPoints {
   static const String paginationDoctors = "doctor/pagination";
   static const String doctorImageUrl = "http://192.168.1.76:5000/doctors/";
   // static const String doctorImageUrl = "http://192.168.137.1:5000/doctors/";
+  
+// -------------------------------Appointment Route---------------------------
+ static const String createAppointment = "booking/create_appointments";
+  static const String getUsersWithAppointments = "booking/users_with_appointments";
+  static const String getAppointmentById = "booking/appointments/";
+  static const String updateAppointment = "booking/update_appointments/";
+  static const String deleteAppointment = "booking/delete_appointments/";
+  static const String approveAppointment = "booking/approve_appointment/";
+  static const String cancelAppointment = "booking/cancel_appointment/";
 }
+
+
