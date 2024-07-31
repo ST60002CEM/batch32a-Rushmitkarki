@@ -18,7 +18,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => ref.read(profileViewmodelProvider.notifier).initialize(),
+          () => ref.read(profileViewmodelProvider.notifier).initialize(),
     );
   }
 
@@ -50,16 +50,23 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
             ),
             ProfileMenu(
               text: "Notifications",
-              icon: "assets/icons/Bell.svg",
+              icon: "assets/icons/bell.svg",
               press: () {
                 // Navigate to Notifications screen
               },
             ),
             ProfileMenu(
-              text: "Change Password",
-              icon: "assets/icons/password.svg",
+              text: "Favorite Doctors",
+              icon: "assets/icons/doctor.svg",
               press: () {
-                // Navigate to Settings screen
+                // Navigate to Favorite Doctors screen
+              },
+            ),
+            ProfileMenu(
+              text: "My Appointment List",
+              icon: "assets/icons/appointment.svg",
+              press: () {
+                // Navigate to My Appointment List screen
               },
             ),
             ProfileMenu(
@@ -92,35 +99,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                   ).show();
                 }
               },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.blueAccent,
-                  padding: const EdgeInsets.all(20),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  backgroundColor: Colors.blueAccent.withOpacity(0.2),
-                ),
-                onPressed: () {},
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      "assets/icons/dark_mode.svg",
-                      width: 22,
-                    ),
-                    const SizedBox(width: 20),
-                    const Expanded(child: Text("Dark Mode/Light Mode")),
-                    Switch(
-                      value: true,
-                      onChanged: (value) {
-                        value = !value;
-                      },
-                    ),
-                  ],
-                ),
-              ),
             ),
           ],
         ),
