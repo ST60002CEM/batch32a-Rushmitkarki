@@ -8,6 +8,9 @@ class ProfilePic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Using a fixed random number to ensure the same avatar for the same user
+    final randomAvatarUrl = 'https://avatars.dicebear.com/api/bottts/1234.svg';
+
     return SizedBox(
       height: 115,
       width: 115,
@@ -15,8 +18,8 @@ class ProfilePic extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          const CircleAvatar(
-            backgroundImage: AssetImage("assets/images/logo.jpg"),
+          CircleAvatar(
+            backgroundImage: NetworkImage(randomAvatarUrl),
           ),
           Positioned(
             right: -16,
@@ -34,7 +37,7 @@ class ProfilePic extends StatelessWidget {
                   backgroundColor: const Color(0xFFF5F6F9),
                 ),
                 onPressed: () {},
-                child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
+                child: SvgPicture.asset("assets/icons/camera.svg"),
               ),
             ),
           )

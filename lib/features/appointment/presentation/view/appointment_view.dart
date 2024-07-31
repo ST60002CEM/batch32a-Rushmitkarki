@@ -1,61 +1,128 @@
-import 'package:final_assignment/features/appointment/presentation/viewmodel/appointment_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
+class ExploreView extends StatefulWidget {
+  const ExploreView({super.key});
 
-class AppointmentView extends StatelessWidget {
+  @override
+  State<ExploreView> createState() => _ExploreViewState();
+}
+
+class _ExploreViewState extends State<ExploreView> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _dateController = TextEditingController();
+
+  void _selectDate(BuildContext context) async {
+    final DateTime? selected = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+    if (selected != null) {
+      setState(() {
+        _dateController.text = DateFormat('MM/dd/yyyy').format(selected);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Appointment Details'),
+        title: const Text('Appointment Form'),
       ),
-      body: Consumer<AppointmentProvider>(
-        builder: (context, appointmentProvider, child) {
-          final appointment = appointmentProvider.currentAppointment;
-
-          if (appointment == null) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildInfoRow('Patient Name', appointment.patientName),
-                _buildInfoRow('Email', appointment.email),
-                _buildInfoRow('Appointment Date', _formatDate(appointment.appointmentDate)),
-                _buildInfoRow('Phone', appointment.phone),
-                SizedBox(height: 16),
-                Text('Description:', style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 8),
-                Text(appointment.description),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildInfoRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 120,
-            child: Text('$label:', style: TextStyle(fontWeight: FontWeight.bold)),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: <Widget>[
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Patient Name',
+                  icon: Icon(Icons.person),
+                ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter the patient name';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  icon: Icon(Icons.phone),
+                ),
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your phone number';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                controller: _dateController,
+                decoration: const InputDecoration(
+                  labelText: 'Booking Date',
+                  icon: Icon(Icons.calendar_today),
+                ),
+                readOnly: true,
+                onTap: () {
+                  _selectDate(context);
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please select a booking date';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  icon: Icon(Icons.email),
+                ),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16.0),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Description',
+                  icon: Icon(Icons.description),
+                ),
+                maxLines: 3,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a description';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    // Process data
+                  }
+                },
+                child: const Text('Submit'),
+              ),
+            ],
           ),
-          Expanded(child: Text(value)),
-        ],
+        ),
       ),
     );
-  }
-
-  String _formatDate(DateTime date) {
-    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 }
