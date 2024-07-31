@@ -39,9 +39,20 @@ class _ExploreViewState extends State<ExploreView> {
           child: ListView(
             children: <Widget>[
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Patient Name',
-                  icon: Icon(Icons.person),
+                  prefixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -52,9 +63,20 @@ class _ExploreViewState extends State<ExploreView> {
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Phone Number',
-                  icon: Icon(Icons.phone),
+                  prefixIcon: Icon(Icons.phone),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 keyboardType: TextInputType.phone,
                 validator: (value) {
@@ -67,9 +89,20 @@ class _ExploreViewState extends State<ExploreView> {
               const SizedBox(height: 16.0),
               TextFormField(
                 controller: _dateController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Booking Date',
-                  icon: Icon(Icons.calendar_today),
+                  prefixIcon: Icon(Icons.calendar_today),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 readOnly: true,
                 onTap: () {
@@ -84,9 +117,20 @@ class _ExploreViewState extends State<ExploreView> {
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Email',
-                  icon: Icon(Icons.email),
+                  prefixIcon: Icon(Icons.email),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
@@ -98,9 +142,20 @@ class _ExploreViewState extends State<ExploreView> {
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Description',
-                  icon: Icon(Icons.description),
+                  prefixIcon: Icon(Icons.description),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Colors.grey),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                    borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 maxLines: 3,
                 validator: (value) {
