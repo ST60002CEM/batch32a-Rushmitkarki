@@ -2,24 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:final_assignment/app/constants/api_endpoint.dart';
 import 'package:final_assignment/features/appointment/data/model/appointment_model.dart';
 
-class AppointmentRemoteDataSource {
+class AppointmentListRemoteDataSource {
   final Dio dio;
 
-  AppointmentRemoteDataSource(this.dio);
+  AppointmentListRemoteDataSource(this.dio);
 
-  Future<void> createAppointment(AppointmentModel appointment) async {
-    try {
-      final response = await dio.post(ApiEndPoints.createAppointment,
-          data: appointment.toJson());
-      if (response.statusCode != 200) {
-        throw Exception('Failed to create appointment');
-      }
-    } catch (e) {
-      throw Exception('Failed to create appointment: $e');
-    }
-  }
-
-  Future<List<AppointmentModel>> fetchAppointments() async {
+  Future<List<AppointmentModel>> fetchUserAppointments() async {
     try {
       final response = await dio.get(ApiEndPoints.getUsersWithAppointments);
       if (response.statusCode == 200) {
