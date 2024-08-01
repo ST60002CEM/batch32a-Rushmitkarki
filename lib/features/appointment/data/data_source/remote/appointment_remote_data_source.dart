@@ -11,7 +11,7 @@ class AppointmentRemoteDataSource {
     try {
       final response = await dio.post(ApiEndPoints.createAppointment,
           data: appointment.toJson());
-      if (response.statusCode != 200) {
+      if (response.statusCode != 201) {
         throw Exception('Failed to create appointment');
       }
     } catch (e) {
