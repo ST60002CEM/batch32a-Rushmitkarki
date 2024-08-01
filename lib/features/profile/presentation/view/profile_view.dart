@@ -4,7 +4,6 @@ import 'package:final_assignment/features/profile/presentation/widgets/profile_m
 import 'package:final_assignment/features/profile/presentation/widgets/profile_pic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ProfileView extends ConsumerStatefulWidget {
   const ProfileView({super.key});
@@ -18,7 +17,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
   void initState() {
     super.initState();
     Future.microtask(
-          () => ref.read(profileViewmodelProvider.notifier).initialize(),
+      () => ref.read(profileViewmodelProvider.notifier).initialize(),
     );
   }
 
@@ -39,7 +38,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
             const SizedBox(height: 20),
             ProfileMenu(
               text: profileState.authEntity?.fName ?? "First Name",
-              icon: "assets/icons/profile.svg",
+              icon: "assets/icons/user.svg",
               press: () {
                 if (mounted) {
                   ref
