@@ -11,4 +11,6 @@ class CreateAppointment {
   Future<void> call(Appointment appointment) async {
     await repository.createAppointment(appointment);
   }
+
+  addAppointment(Appointment appointment) {}
 }

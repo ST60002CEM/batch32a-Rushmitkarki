@@ -1,3 +1,5 @@
+import 'package:final_assignment/features/appointment/domain/entity/appointment_entity.dart';
+import 'package:final_assignment/features/appointment/domain/usecases/appointment_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,6 +13,12 @@ class ExploreView extends StatefulWidget {
 class _ExploreViewState extends State<ExploreView> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  get ref => null;
 
   void _selectDate(BuildContext context) async {
     final DateTime? selected = await showDatePicker(
@@ -174,7 +182,23 @@ class _ExploreViewState extends State<ExploreView> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Process data
+                    final appointment = Appointment(
+                      id: DateTime.now()
+                          .millisecondsSinceEpoch
+                          .toString(), // Generate a unique ID
+                      patientName: _nameController.text,
+                      email: _emailController.text,
+                      appointmentDate:
+                          DateFormat('MM/dd/yyyy').parse(_dateController.text),
+                      phoneNumber: _phoneController.text,
+                      appointmentDescription: _descriptionController.text,
+                    );
+                    ref.read(CreateAppointment).addAppointment(appointment);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Appointment booked successfully'),
+                      ),
+                    );
                   }
                 },
                 child: const Text('Submit'),
