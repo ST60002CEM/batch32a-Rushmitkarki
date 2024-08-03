@@ -50,8 +50,8 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
               },
             ),
             ProfileMenu(
-              text: "Notifications",
-              icon: "assets/icons/bell.svg",
+              text: "Insurance",
+              icon: "assets/icons/insurance.svg",
               press: () {
                 // Navigate to Notifications screen
               },
