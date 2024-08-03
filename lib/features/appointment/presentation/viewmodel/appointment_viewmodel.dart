@@ -14,7 +14,7 @@ class AppointmentNotifier extends StateNotifier<List<Appointment>> {
       final appointments = await fetchAppointments();
       state = appointments;
     } catch (e) {
-      // Handle the error (e.g., show a message to the user)
+    // 
     }
   }
 

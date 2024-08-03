@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:all_sensors2/all_sensors2.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -7,7 +8,6 @@ import 'package:final_assignment/core/common/show_my_snackbar.dart';
 import 'package:final_assignment/core/provider/theme_provider.dart';
 import 'package:final_assignment/features/home/presentation/view/mycard.dart';
 import 'package:final_assignment/features/home/presentation/viewmodel/doctor_view_model.dart';
-import 'package:final_assignment/features/home/presentation/viewmodel/home_view_model.dart';
 import 'package:final_assignment/features/profile/presentation/viewmodel/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -80,22 +80,10 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
         title: const Text('Dashboard'),
         actions: [
           IconButton(
-            onPressed: () {
-              showMySnackBar(message: 'REF');
-              ref.read(doctorViewModelProvider.notifier).resetState();
-            },
+            onPressed: () {},
             icon: const Icon(
-              Icons.refresh,
+              Icons.notifications,
               color: Colors.greenAccent,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              ref.read(homeViewModelProvider.notifier).logout();
-            },
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.red,
             ),
           ),
           Switch(
@@ -124,11 +112,11 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                 ),
                 items: carouselItems
                     .map((item) => Container(
-                  child: Center(
-                    child: Image.asset(item,
-                        fit: BoxFit.cover, width: 1000),
-                  ),
-                ))
+                          child: Center(
+                            child: Image.asset(item,
+                                fit: BoxFit.cover, width: 1000),
+                          ),
+                        ))
                     .toList(),
               ),
               const SizedBox(height: 20),
@@ -152,7 +140,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                       title: doctor.doctorName,
                       subtitle: doctor.doctorField,
                       imageUrl:
-                      '${ApiEndPoints.doctorImageUrl}${doctor.doctorImage}',
+                          '${ApiEndPoints.doctorImageUrl}${doctor.doctorImage}',
                     );
                   },
                 ),
