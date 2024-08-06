@@ -3,7 +3,7 @@ class ApiEndPoints {
 
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
-  static const String baseUrl = 'http://192.168.1.76:5000/api/';
+  static const String baseUrl = 'http://192.168.1.77:5000/api/';
   // static const String baseUrl = 'http://192.168.137.1:5000/api/';
 
   // --------------------------Auth Routes--------------------------
@@ -17,7 +17,7 @@ class ApiEndPoints {
   // --------------------------Doctor Routes--------------------------
   static const String getDoctors = "doctor/get_all_doctors";
   static const String paginationDoctors = "doctor/pagination";
-  static const String doctorImageUrl = "http://192.168.1.76:5000/doctors/";
+  static const String doctorImageUrl = "http://192.168.1.77:5000/doctors/";
   // static const String doctorImageUrl = "http://192.168.137.1:5000/doctors/";
 
 // -------------------------------Appointment Route---------------------------

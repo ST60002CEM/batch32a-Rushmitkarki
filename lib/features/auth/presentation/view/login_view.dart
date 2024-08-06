@@ -1,5 +1,6 @@
 import 'package:final_assignment/features/auth/presentation/viewmodel/auth_view_model.dart';
 import 'package:final_assignment/features/auth/presentation/viewmodel/login_view_model.dart';
+import 'package:final_assignment/features/forgotpassword/presentation/navigator/forget_password_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -119,13 +120,17 @@ class _LoginViewState extends ConsumerState<LoginView> {
                               ),
                             ],
                           ),
-                          GestureDetector(
+                          TextButton(
+                            onPressed: () {
+                              ref
+                                  .read(forgotPasswordNavigatorProvider)
+                                  .openForgotPasswordView(context);
+                            },
                             child: const Text(
                               'Forget password?',
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
-                                // color: lightColorScheme.primary,
-                                color: Colors.blueAccent,
+                                color: Colors.blue,
                               ),
                             ),
                           ),
@@ -176,10 +181,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                             Icons.fingerprint,
                           ),
                           onPressed: () {
-                            ref 
-                            .read(authViewModelProvider.notifier)
-                            .fingerPrintLogin();
-                          
+                            ref
+                                .read(authViewModelProvider.notifier)
+                                .fingerPrintLogin();
                           },
                         ),
                       ),
