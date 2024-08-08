@@ -4,6 +4,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
+import 'dart:io' as _i9;
 
 import 'package:dartz/dartz.dart' as _i4;
 import 'package:final_assignment/core/failure/failure.dart' as _i7;
@@ -16,11 +17,11 @@ import 'package:final_assignment/features/auth/domain/repository/i_auth_reposito
 import 'package:final_assignment/features/auth/domain/usecases/auth_usecase.dart'
     as _i5;
 import 'package:final_assignment/features/auth/presentation/navigator/login_navigator.dart'
-    as _i9;
-import 'package:local_auth/src/local_auth.dart' as _i10;
-import 'package:local_auth_android/local_auth_android.dart' as _i11;
-import 'package:local_auth_darwin/local_auth_darwin.dart' as _i12;
-import 'package:local_auth_windows/local_auth_windows.dart' as _i13;
+    as _i10;
+import 'package:local_auth/src/local_auth.dart' as _i11;
+import 'package:local_auth_android/local_auth_android.dart' as _i12;
+import 'package:local_auth_darwin/local_auth_darwin.dart' as _i13;
+import 'package:local_auth_windows/local_auth_windows.dart' as _i14;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -239,19 +240,73 @@ class MockAuthUseCase extends _i1.Mock implements _i5.AuthUseCase {
           ),
         )),
       ) as _i6.Future<_i4.Either<_i7.Failure, bool>>);
+
+  @override
+  _i6.Future<_i4.Either<_i7.Failure, bool>> updateProfile(
+          _i8.AuthEntity? user) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateProfile,
+          [user],
+        ),
+        returnValue: _i6.Future<_i4.Either<_i7.Failure, bool>>.value(
+            _FakeEither_2<_i7.Failure, bool>(
+          this,
+          Invocation.method(
+            #updateProfile,
+            [user],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i4.Either<_i7.Failure, bool>>.value(
+                _FakeEither_2<_i7.Failure, bool>(
+          this,
+          Invocation.method(
+            #updateProfile,
+            [user],
+          ),
+        )),
+      ) as _i6.Future<_i4.Either<_i7.Failure, bool>>);
+
+  @override
+  _i6.Future<_i4.Either<_i7.Failure, String>> uploadProfilePicture(
+          _i9.File? file) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #uploadProfilePicture,
+          [file],
+        ),
+        returnValue: _i6.Future<_i4.Either<_i7.Failure, String>>.value(
+            _FakeEither_2<_i7.Failure, String>(
+          this,
+          Invocation.method(
+            #uploadProfilePicture,
+            [file],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i4.Either<_i7.Failure, String>>.value(
+                _FakeEither_2<_i7.Failure, String>(
+          this,
+          Invocation.method(
+            #uploadProfilePicture,
+            [file],
+          ),
+        )),
+      ) as _i6.Future<_i4.Either<_i7.Failure, String>>);
 }
 
 /// A class which mocks [LoginViewNavigator].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockLoginViewNavigator extends _i1.Mock
-    implements _i9.LoginViewNavigator {}
+    implements _i10.LoginViewNavigator {}
 
 /// A class which mocks [LocalAuthentication].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockLocalAuthentication extends _i1.Mock
-    implements _i10.LocalAuthentication {
+    implements _i11.LocalAuthentication {
   @override
   _i6.Future<bool> get canCheckBiometrics => (super.noSuchMethod(
         Invocation.getter(#canCheckBiometrics),
@@ -262,12 +317,12 @@ class MockLocalAuthentication extends _i1.Mock
   @override
   _i6.Future<bool> authenticate({
     required String? localizedReason,
-    Iterable<_i11.AuthMessages>? authMessages = const [
-      _i12.IOSAuthMessages(),
-      _i11.AndroidAuthMessages(),
-      _i13.WindowsAuthMessages(),
+    Iterable<_i12.AuthMessages>? authMessages = const [
+      _i13.IOSAuthMessages(),
+      _i12.AndroidAuthMessages(),
+      _i14.WindowsAuthMessages(),
     ],
-    _i11.AuthenticationOptions? options = const _i11.AuthenticationOptions(),
+    _i12.AuthenticationOptions? options = const _i12.AuthenticationOptions(),
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -304,15 +359,15 @@ class MockLocalAuthentication extends _i1.Mock
       ) as _i6.Future<bool>);
 
   @override
-  _i6.Future<List<_i11.BiometricType>> getAvailableBiometrics() =>
+  _i6.Future<List<_i12.BiometricType>> getAvailableBiometrics() =>
       (super.noSuchMethod(
         Invocation.method(
           #getAvailableBiometrics,
           [],
         ),
         returnValue:
-            _i6.Future<List<_i11.BiometricType>>.value(<_i11.BiometricType>[]),
+            _i6.Future<List<_i12.BiometricType>>.value(<_i12.BiometricType>[]),
         returnValueForMissingStub:
-            _i6.Future<List<_i11.BiometricType>>.value(<_i11.BiometricType>[]),
-      ) as _i6.Future<List<_i11.BiometricType>>);
+            _i6.Future<List<_i12.BiometricType>>.value(<_i12.BiometricType>[]),
+      ) as _i6.Future<List<_i12.BiometricType>>);
 }

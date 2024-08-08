@@ -1,29 +1,34 @@
+import 'package:final_assignment/core/common/show_my_snackbar.dart';
 import 'package:final_assignment/features/appointment/domain/entity/appointment_entity.dart';
 import 'package:final_assignment/features/appointment/domain/usecases/appointment_usecase.dart';
-import 'package:final_assignment/features/appointment/domain/usecases/get_user_appointment_usecase.dart';
+import 'package:final_assignment/features/appointment/presentation/state/appointment_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppointmentNotifier extends StateNotifier<List<Appointment>> {
-  final FetchAppointments fetchAppointments;
-  final CreateAppointment createAppointment;
+final appointmentViewmodelProvider =
+    StateNotifierProvider<AppointmentViewmodel, AppointmentState>((ref) {
+  final appointmentUsecase = ref.watch(appointmentUsecaseProvider);
+  return AppointmentViewmodel(appointmentUsecase: appointmentUsecase);
+});
 
-  AppointmentNotifier(this.fetchAppointments, this.createAppointment) : super([]);
+class AppointmentViewmodel extends StateNotifier<AppointmentState> {
+  final AppointmentUsecase appointmentUsecase;
 
-  Future<void> loadAppointments() async {
-    try {
-      final appointments = await fetchAppointments();
-      state = appointments;
-    } catch (e) {
-    // 
-    }
-  }
+  AppointmentViewmodel({required this.appointmentUsecase})
+      : super(AppointmentState.initial());
 
-  Future<void> addAppointment(Appointment appointment) async {
-    try {
-      await createAppointment(appointment);
-      await loadAppointments(); // Refresh the list after adding a new appointment
-    } catch (e) {
-      // Handle the error (e.g., show a message to the user)
-    }
+  Future<void> addAppointment(AppointmentEntity appointment) async {
+    state = state.copyWith(isLoading: true);
+    final result = await appointmentUsecase.addAppointment(appointment);
+    result.fold(
+      (l) {
+        state = state.copyWith(isLoading: false, error: l.error);
+      },
+      (r) {
+        state = state.copyWith(
+          isLoading: false,
+        );
+        showMySnackBar(message: 'Appointment added successfully');
+      },
+    );
   }
 }

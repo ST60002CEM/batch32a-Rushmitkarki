@@ -1,6 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:final_assignment/features/favouritedoctors/presentation/view/favourite_doctor_view.dart';
-import 'package:final_assignment/features/myappointment/presentation/view/appointment_list_view.dart';
 import 'package:final_assignment/features/profile/presentation/viewmodel/profile_view_model.dart';
 import 'package:final_assignment/features/profile/presentation/widgets/profile_menu.dart';
 import 'package:final_assignment/features/profile/presentation/widgets/profile_pic.dart';
@@ -74,11 +73,9 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
               icon: "assets/icons/appointment.svg",
               press: () {
                 if (mounted) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const AppointmentListView(),
-                    ),
-                  );
+                  ref
+                      .read(profileViewmodelProvider.notifier)
+                      .openAppointmentList();
                 }
               },
             ),

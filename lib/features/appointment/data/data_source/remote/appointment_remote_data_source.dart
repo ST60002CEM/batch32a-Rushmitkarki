@@ -1,30 +1,68 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:final_assignment/app/constants/api_endpoint.dart';
+import 'package:final_assignment/core/failure/failure.dart';
+import 'package:final_assignment/core/networking/remote/http_service.dart';
+import 'package:final_assignment/core/shared_prefs/user_shared_prefs.dart';
 import 'package:final_assignment/features/appointment/data/model/appointment_model.dart';
+import 'package:final_assignment/features/appointment/domain/entity/appointment_entity.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../dto/get_appointment_dto.dart';
+
+final appointmentRemoteDataSourceProvider =
+    Provider<AppointmentRemoteDataSource>((ref) {
+  return AppointmentRemoteDataSource(
+      ref.watch(httpServiceProvider), ref.watch(userSharedPrefsProvider));
+});
 
 class AppointmentRemoteDataSource {
   final Dio dio;
+  final UserSharedPrefs userSharedPreferences;
 
-  AppointmentRemoteDataSource(this.dio);
+  AppointmentRemoteDataSource(this.dio, this.userSharedPreferences);
 
-  Future<void> createAppointment(AppointmentModel appointment) async {
+  Future<Either<Failure, bool>> createAppointment(
+      AppointmentEntity appointment) async {
     try {
-      final response = await dio.post(ApiEndPoints.createAppointment,
-          data: appointment.toJson());
-      if (response.statusCode != 201) {
+      String? token;
+      final data = await userSharedPreferences.getUserToken();
+
+      data.fold((l) => token = null, (r) => token = r);
+
+      final response = await dio.post(
+        ApiEndPoints.createAppointment,
+        data: AppointmentModel.fromEntity(appointment).toJson(),
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      if (response.statusCode == 200) {
+        return Right(true);
+      } else {
         throw Exception('Failed to create appointment');
       }
     } catch (e) {
-      throw Exception('Failed to create appointment: $e');
+      return Left(Failure(error: 'Failed to create appointment: $e'));
     }
   }
 
-  Future<List<AppointmentModel>> fetchAppointments() async {
+  Future<Either<Failure, List<AppointmentEntity>>> fetchAppointments() async {
     try {
-      final response = await dio.get(ApiEndPoints.getUsersWithAppointments);
+      String? token;
+      final data = await userSharedPreferences.getUserToken();
+
+      data.fold((l) => token = null, (r) => token = r);
+
+      final response = await dio.get(
+        ApiEndPoints.getUsersWithAppointments,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
       if (response.statusCode == 200) {
-        List<dynamic> data = response.data;
-        return data.map((json) => AppointmentModel.fromJson(json)).toList();
+        final appointmentDto = GetAppointmentDto.fromJson(response.data);
+        return Right(AppointmentModel.toEntities(appointmentDto.data));
       } else {
         throw Exception('Failed to load appointments');
       }

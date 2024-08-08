@@ -23,15 +23,20 @@ class AuthHiveModel {
   final String email;
 
   @HiveField(4)
-  final String password;
+  final String? password;
+  @HiveField(5)
+  final String phone;
+
   // Constructor
   AuthHiveModel({
     String? userId,
     required this.fName,
     required this.lName,
     required this.email,
-    required this.password,
+    this.password,
+    required this.phone,
   }) : userId = userId ?? const Uuid().v4();
+
   // Empty Constructor
   AuthHiveModel.empty()
       : this(
@@ -40,6 +45,7 @@ class AuthHiveModel {
           lName: '',
           email: '',
           password: '',
+          phone: '',
         );
 
   AuthEntity toEntity() => AuthEntity(
@@ -48,6 +54,7 @@ class AuthHiveModel {
         lName: lName,
         email: email,
         password: password,
+        phone: phone,
       );
 
   AuthHiveModel fromEntity(AuthEntity entity) => AuthHiveModel(
@@ -56,6 +63,7 @@ class AuthHiveModel {
         lName: entity.lName,
         email: entity.email,
         password: entity.password,
+        phone: entity.phone,
       );
 
   List<AuthEntity> toEntities(List<AuthHiveModel> models) =>
@@ -66,6 +74,6 @@ class AuthHiveModel {
 
   @override
   String toString() {
-    return 'AuthHiveModel(userId: $userId, fName: $fName, lName: $lName, email: $email, password: $password)';
+    return 'AuthHiveModel(userId: $userId, fName: $fName, lName: $lName, email: $email, password: $password, phone: $phone)';
   }
 }

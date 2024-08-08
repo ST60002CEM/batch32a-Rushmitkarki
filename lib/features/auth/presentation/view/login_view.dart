@@ -123,8 +123,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
                           TextButton(
                             onPressed: () {
                               ref
-                                  .read(forgotPasswordNavigatorProvider)
-                                  .openForgotPasswordView(context);
+                                  .read(forgetPasswordViewNavigatorProvider)
+                                  .openForgotPasswordView();
                             },
                             child: const Text(
                               'Forget password?',

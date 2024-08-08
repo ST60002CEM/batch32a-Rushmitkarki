@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:final_assignment/app/navigator_key/navigator_key.dart';
 import 'package:final_assignment/core/common/show_my_snackbar.dart';
 import 'package:final_assignment/core/shared_prefs/user_shared_prefs.dart';
+import 'package:final_assignment/features/auth/domain/entity/auth_entity.dart';
 import 'package:final_assignment/features/auth/domain/usecases/auth_usecase.dart';
 import 'package:final_assignment/features/edit_profile/presentation/state/current_state_profile.dart';
 import 'package:final_assignment/features/profile/presentation/navigator/profile_navigator.dart';
@@ -46,14 +49,38 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
           state = state.copyWith(isLoading: false, error: l.error);
         },
         (r) {
-          state = state.copyWith(isLoading: false, authEntity: r);
+          if (r.image != null) {
+            state = state.copyWith(
+                isLoading: false, authEntity: r, uploadImage: r.image);
+          } else {
+            state = state.copyWith(isLoading: false, authEntity: r);
+          }
         },
       );
     } catch (e) {
       state = state.copyWith(
           isLoading: false, error: 'Failed to fetch current user.');
+      print('Error fetching current user: $e');
     }
   }
+
+  // Future<void> getCurrentUser() async {
+  //   try {
+  //     state = state.copyWith(isLoading: true);
+  //     final data = await authUseCase.getCurrentUser();
+  //     data.fold(
+  //       (l) {
+  //         state = state.copyWith(isLoading: false, error: l.error);
+  //       },
+  //       (r) {
+  //         state = state.copyWith(isLoading: false, authEntity: r);
+  //       },
+  //     );
+  //   } catch (e) {
+  //     state = state.copyWith(
+  //         isLoading: false, error: 'Failed to fetch current user.');
+  //   }
+  // }
 
   Future<void> enableFingerprint() async {
     if (state.isFingerprintEnabled) {
@@ -121,5 +148,39 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
   void logout() {
     userSharedPrefs.removeUserToken();
     navigator.openLoginView();
+  }
+
+  Future<void> updateUser(AuthEntity user) async {
+    state = state.copyWith(isLoading: true);
+    final data = await authUseCase.updateProfile(user);
+    data.fold(
+      (l) {
+        state = state.copyWith(isLoading: false, error: l.error);
+      },
+      (r) {
+        state = state.copyWith(isLoading: false, error: null);
+        showMySnackBar(message: 'Profile updated', color: Colors.green);
+      },
+    );
+  }
+
+  void openAppointmentList() {
+    navigator.openAppointmentDetail();
+  }
+
+  Future<void> uploadProfilePicture(File file) async {
+    state = state.copyWith(isLoading: true);
+    final data = await authUseCase.uploadProfilePicture(file);
+    data.fold(
+      (l) {
+        state = state.copyWith(isLoading: false, error: l.error);
+      },
+      (uploadProfilePicture) {
+        state = state.copyWith(
+            isLoading: false, error: null, uploadImage: uploadProfilePicture);
+        showMySnackBar(
+            message: 'Profile picture uploaded', color: Colors.green);
+      },
+    );
   }
 }
