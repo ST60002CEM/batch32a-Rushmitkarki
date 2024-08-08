@@ -35,6 +35,25 @@ class DoctorApiModel {
         doctorFee = 0,
         doctorImage = '';
 
+
+
+  factory DoctorApiModel.fromJson(Map<String, dynamic> json) =>
+      _$DoctorApiModelFromJson(json);
+  Map<String, dynamic> toJson() => _$DoctorApiModelToJson(this);
+  // to entitylist
+
+  // from entity
+  factory DoctorApiModel.fromEntity(DoctorEntity entity) {
+    return DoctorApiModel(
+      doctorName: entity.doctorName,
+      doctorField: entity.doctorField,
+      doctorExperience: double.parse(entity.doctorExperience),
+      doctorFee: double.parse(entity.doctorFee),
+      doctorImage: entity.doctorImage,
+    );
+  }
+
+  // to entity
   DoctorEntity toEntity() {
     return DoctorEntity(
       doctorid: id,
@@ -42,14 +61,10 @@ class DoctorApiModel {
       doctorField: doctorField,
       doctorExperience: doctorExperience.toString(),
       doctorFee: doctorFee.toString(),
-      doctorImage: doctorImage, 
+      doctorImage: doctorImage,
     );
   }
 
-  factory DoctorApiModel.fromJson(Map<String, dynamic> json) =>
-      _$DoctorApiModelFromJson(json);
-  Map<String, dynamic> toJson() => _$DoctorApiModelToJson(this);
-  // to entitylist
   List<DoctorEntity> toEntityList(List<DoctorApiModel> doctors) {
     return doctors.map((doctor) => doctor.toEntity()).toList();
   }

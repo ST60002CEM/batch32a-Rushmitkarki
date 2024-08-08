@@ -4,6 +4,7 @@ class ApiEndPoints {
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
   static const String baseUrl = 'http://192.168.1.77:5000/api/';
+
   // static const String baseUrl = 'http://192.168.137.1:5000/api/';
 
   // --------------------------Auth Routes--------------------------
@@ -13,11 +14,17 @@ class ApiEndPoints {
   static const String getToken = "user/generate_token";
   static const String verifyUser = 'user/Verify';
   static const String forgetpassword = 'user/forget_password';
+  static const String resetpassword = 'user/reset_password';
+  static const String updateProfile = 'user/update_profile';
+  static const String profilepicture = 'user/profile_picture';
+  static const String imageUrlprofile =
+      "http://192.168.1.77:5000/profile_pictures/";
 
   // --------------------------Doctor Routes--------------------------
   static const String getDoctors = "doctor/get_all_doctors";
   static const String paginationDoctors = "doctor/pagination";
   static const String doctorImageUrl = "http://192.168.1.77:5000/doctors/";
+
   // static const String doctorImageUrl = "http://192.168.137.1:5000/doctors/";
 
 // -------------------------------Appointment Route---------------------------
@@ -33,11 +40,12 @@ class ApiEndPoints {
   // ------------------------------Favourite Doctors---------------------------
   static const String getUserFavorites = 'favourite/all';
   static const String addFavorite = 'favourite/add';
-  static const String deleteFavorite = 'favourite/delete';
+  static const String deleteFavorite = 'favourite/delete/';
 
 // ----------------------------review-----------------------------
   static const String addreview = 'rating/add';
   static const String getreview = 'rating/doctor';
+
   // --------------------------insurance--------------------------
   static const String createInsurance = 'insurance/create';
   static const String getInsurance = 'insurance/get_all_insurances';

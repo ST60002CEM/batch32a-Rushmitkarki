@@ -15,8 +15,19 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    phoneNumberController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +101,20 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                       ),
                       const SizedBox(height: 20.0),
                       TextField(
+                        controller: phoneNumberController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          filled: true,
+                          hintStyle: TextStyle(color: Colors.grey[800]),
+                          hintText: "Phone Number",
+                          prefixIcon: const Icon(Icons.phone),
+                          fillColor: Colors.white70,
+                        ),
+                      ),
+                      const SizedBox(height: 20.0),
+                      TextField(
                         controller: passwordController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -104,6 +129,7 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                       ),
                       const SizedBox(height: 20.0),
                       TextField(
+                        controller: confirmPasswordController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -120,14 +146,14 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                         onPressed: () {
                           // Handle registration logic here
                           AuthEntity authEntity = AuthEntity(
-                              fName: firstNameController.text,
-                              lName: lastNameController.text,
-                              email: emailController.text,
-                              password: passwordController.text);
+                            fName: firstNameController.text,
+                            lName: lastNameController.text,
+                            email: emailController.text,
+                            phone: phoneNumberController.text,
+                            password: passwordController.text,
+                          );
 
-                          ref
-                              .read(authViewModelProvider.notifier)
-                              .registerUser(authEntity);
+                          ref.read(authViewModelProvider.notifier).registerUser(authEntity);
                         },
                         child: const Text(
                           'Register',

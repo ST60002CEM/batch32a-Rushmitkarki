@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:final_assignment/core/failure/failure.dart';
 import 'package:final_assignment/features/auth/data/data_source/local/auth_local_data_source.dart';
@@ -19,33 +21,58 @@ class AuthLocalRepository implements IAuthRepository {
   Future<Either<Failure, bool>> registerUser(AuthEntity user) {
     return authLocalDataSource.registerUser(user);
   }
-  
+
   @override
   Future<Either<Failure, bool>> loginUser(String email, String password) {
     return authLocalDataSource.loginUser(email, password);
   }
-  
+
   @override
   Future<Either<Failure, bool>> registerDoctor(AuthEntity doctor) {
     // TODO: implement registerDoctor
     throw UnimplementedError();
   }
-  
+
   @override
   Future<Either<Failure, bool>> fingerPrintLogin(String id) {
     // TODO: implement fingerPrintLogin
     throw UnimplementedError();
   }
-  
+
   @override
   Future<Either<Failure, AuthEntity>> getCurrentUser() {
     // TODO: implement getCurrentUser
     throw UnimplementedError();
   }
-  
+
   @override
   Future<Either<Failure, bool>> verifyUser() {
     // TODO: implement verifyUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, bool>> updateProfile(AuthEntity authEntity) {
+    // TODO: implement updateProfile
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadProfilePicture(File image) {
+    // TODO: implement uploadProfilePicture
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, bool>> resetPass(
+      {required String phone, required String password, required String otp}) {
+    // TODO: implement resetPass
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, bool>> sendOtp(String phone) {
+    // TODO: implement sendOtp
     throw UnimplementedError();
   }
 }

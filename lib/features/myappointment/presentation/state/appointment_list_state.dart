@@ -1,29 +1,29 @@
 import '../../../appointment/domain/entity/appointment_entity.dart';
 
-class AppointmentState {
+class AppointmentListState {
   final String? error;
   final bool isLoading;
   final List<AppointmentEntity> appointments;
 
-  AppointmentState(
+  AppointmentListState(
       {required this.error,
       required this.isLoading,
       required this.appointments});
 
-  factory AppointmentState.initial() {
-    return AppointmentState(
+  factory AppointmentListState.initial() {
+    return AppointmentListState(
       error: null,
       isLoading: false,
       appointments: [],
     );
   }
 
-  AppointmentState copyWith({
+  AppointmentListState copyWith({
     String? error,
     bool? isLoading,
     List<AppointmentEntity>? appointments,
   }) {
-    return AppointmentState(
+    return AppointmentListState(
       error: error ?? this.error,
       isLoading: isLoading ?? this.isLoading,
       appointments: appointments ?? this.appointments,

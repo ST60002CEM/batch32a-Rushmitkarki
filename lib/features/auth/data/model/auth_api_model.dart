@@ -15,15 +15,18 @@ class AuthApiModel extends Equatable {
   final String firstName;
   final String lastName;
   final String email;
-
-  final String password;
+  final String phone;
+  final String? image;
+  final String? password;
 
   const AuthApiModel({
     this.id,
     required this.firstName,
     required this.lastName,
     required this.email,
-    required this.password,
+    this.password,
+    required this.phone,
+    this.image,
   });
 
   const AuthApiModel.empty()
@@ -31,7 +34,9 @@ class AuthApiModel extends Equatable {
         firstName = '',
         lastName = '',
         email = '',
-        password = '';
+        password = '',
+        phone = '',
+        image = '';
 
   AuthEntity toEntity() {
     return AuthEntity(
@@ -40,15 +45,19 @@ class AuthApiModel extends Equatable {
       lName: lastName,
       email: email,
       password: password,
+      phone: phone,
+      image: image ?? '',
     );
   }
 
-  AuthApiModel fromEntity(AuthEntity entity) {
+  factory AuthApiModel.fromEntity(AuthEntity entity) {
     return AuthApiModel(
       firstName: entity.fName,
       lastName: entity.lName,
       email: entity.email,
       password: entity.password,
+      phone: entity.phone,
+      image: entity.image,
     );
   }
 
@@ -64,5 +73,7 @@ class AuthApiModel extends Equatable {
         lastName,
         email,
         password,
+        phone,
+        image,
       ];
 }

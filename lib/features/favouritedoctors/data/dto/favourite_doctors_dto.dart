@@ -3,37 +3,28 @@ import 'package:final_assignment/features/favouritedoctors/data/model/favourite_
 
 
 class FavouriteDoctorDto {
-  final String id;
-  final String name;
-  final String field;
+  final bool success;
+  final List<FavouriteDoctor> favorites;
 
-  FavouriteDoctorDto({
-    required this.id,
-    required this.name,
-    required this.field,
-  });
+  FavouriteDoctorDto({required this.success, required this.favorites});
 
+//   from json
   factory FavouriteDoctorDto.fromJson(Map<String, dynamic> json) {
     return FavouriteDoctorDto(
-      id: json['id'],
-      name: json['name'],
-      field: json['field'],
+      success: json['success'],
+      favorites: (json['favorites'] as List)
+          .map((doctor) => FavouriteDoctor.fromJson(doctor))
+          .toList(),
     );
   }
 
+//   to json
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'name': name,
-      'field': field,
+      'success': success,
+      'favorites': favorites.map((doctor) => doctor.toJson()).toList(),
     };
   }
 
-  FavouriteDoctor toEntity() {
-    return FavouriteDoctor(
-      id: id,
-      name: name,
-      field: field,
-    );
-  }
+
 }

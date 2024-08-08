@@ -1,10 +1,11 @@
 
 
 import 'package:final_assignment/features/favouritedoctors/data/model/favourite_doctors_model.dart';
+import 'package:final_assignment/features/favouritedoctors/domain/entity/favourite_entity.dart';
 
 class FavouriteDoctorState {
   final bool isLoading;
-  final List<FavouriteDoctor> favouriteDoctors;
+  final List<FavouriteEntity> favouriteDoctors;
   final String? error;
 
   FavouriteDoctorState({
@@ -21,7 +22,7 @@ class FavouriteDoctorState {
 
   FavouriteDoctorState copyWith({
     bool? isLoading,
-    List<FavouriteDoctor>? favouriteDoctors,
+    List<FavouriteEntity>? favouriteDoctors,
     String? error,
   }) {
     return FavouriteDoctorState(

@@ -1,21 +1,21 @@
-class AppoinymentState {
+class AppointmentState {
   final String? error;
   final bool isLoading;
 
-  AppoinymentState({required this.error, required this.isLoading});
+  AppointmentState({required this.error, required this.isLoading});
 
-  factory AppoinymentState.initial() {
-    return AppoinymentState(
+  factory AppointmentState.initial() {
+    return AppointmentState(
       error: null,
       isLoading: false,
     );
   }
 
-  AppoinymentState copyWith({
+  AppointmentState copyWith({
     String? error,
     bool? isLoading,
   }) {
-    return AppoinymentState(
+    return AppointmentState(
       error: error ?? this.error,
       isLoading: isLoading ?? this.isLoading,
     );

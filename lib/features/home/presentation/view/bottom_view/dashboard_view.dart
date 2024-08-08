@@ -34,12 +34,12 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
 
   @override
   void initState() {
-    _streamSubscription.add(gyroscopeEvents!.listen((GyroscopeEvent event) {
-      setState(() {
-        _gyroscopeValues = <double>[event.x, event.y, event.z];
-        _checkGyroscopeValues(_gyroscopeValues);
-      });
-    }));
+    // _streamSubscription.add(gyroscopeEvents!.listen((GyroscopeEvent event) {
+    //   setState(() {
+    //     _gyroscopeValues = <double>[event.x, event.y, event.z];
+    //     _checkGyroscopeValues(_gyroscopeValues);
+    //   });
+    // }));
 
     super.initState();
   }
@@ -129,7 +129,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 0.75,
+                    childAspectRatio: 0.7,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                   ),
@@ -141,6 +141,11 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                       subtitle: doctor.doctorField,
                       imageUrl:
                           '${ApiEndPoints.doctorImageUrl}${doctor.doctorImage}',
+                        onFavoritePressed: () {
+                          ref
+                              .read(doctorViewModelProvider.notifier)
+                              .favorite(doctor.doctorid);
+                        },
                     );
                   },
                 ),

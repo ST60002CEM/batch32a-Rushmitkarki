@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:final_assignment/app/constants/api_endpoint.dart';
@@ -31,7 +33,7 @@ class AuthRemoteDataSource {
     try {
       Response response = await dio.post(
         ApiEndPoints.registerUser,
-        data: authApiModel.fromEntity(authEntity).toJson(),
+        data: AuthApiModel.fromEntity(authEntity).toJson(),
       );
       if (response.statusCode == 201) {
         return const Right(true);
@@ -140,6 +142,174 @@ class AuthRemoteDataSource {
       );
     } on DioException catch (e) {
       return Left(Failure(error: e.error.toString()));
+    }
+  }
+
+  Future<Either<Failure, String>> uploadProfilePicture(File image) async {
+    try {
+      // Retrieve the token
+      String? token;
+      var data = await userSharedPrefs.getUserToken();
+      data.fold(
+        (l) => token = null,
+        (r) => token = r,
+      );
+
+      if (token == null) {
+        return Left(
+          Failure(
+            error: 'No token found',
+          ),
+        );
+      }
+
+      // Prepare the image file
+
+      FormData formData = FormData.fromMap(
+        {
+          'profilePicture': await MultipartFile.fromFile(
+            image.path,
+          ),
+        },
+      );
+
+      Response response = await dio.post(
+        // ApiEndpoints.profileImage,
+        ApiEndPoints.profilepicture,
+        data: formData,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print(response.data);
+        return Right(response.data["profilePicture"]);
+      } else {
+        return Left(
+          Failure(
+            error: response.data['message'],
+            statusCode: response.statusCode.toString(),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.error.toString(),
+          statusCode: e.response?.statusCode.toString(),
+        ),
+      );
+    }
+  }
+
+  // update user
+  Future<Either<Failure, bool>> updateUser(AuthEntity updateUser) async {
+    try {
+      String? token;
+      var data = await userSharedPrefs.getUserToken();
+      data.fold(
+        (l) => token = null,
+        (r) => token = r,
+      );
+
+      if (token == null) {
+        return Left(
+          Failure(
+            error: 'No token found',
+          ),
+        );
+      }
+
+      Response response = await dio.put(
+        ApiEndPoints.updateProfile,
+        data: AuthApiModel.fromEntity(updateUser).toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return const Right(true);
+      } else {
+        return Left(
+          Failure(
+            error: response.data['message'],
+            statusCode: response.statusCode.toString(),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.error.toString(),
+          statusCode: e.response?.statusCode.toString() ?? '0',
+        ),
+      );
+    }
+  }
+
+  Future<Either<Failure, bool>> sentOtp(String phone) async {
+    try {
+      Response response = await dio.post(
+        ApiEndPoints.forgetpassword,
+        data: {
+          "phone": phone,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return const Right(true);
+      }
+
+      return Left(
+        Failure(
+            error: response.data['message'],
+            statusCode: response.statusCode.toString()),
+      );
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.message.toString(),
+        ),
+      );
+    }
+  }
+
+  // reset password from otp
+  Future<Either<Failure, bool>> resetPassword(
+      {required String phone,
+      required String otp,
+      required String password}) async {
+    try {
+      Response response = await dio.post(
+        ApiEndPoints.resetpassword,
+        data: {
+          "phone": phone,
+          "otp": otp,
+          "password": password,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return const Right(true);
+      }
+
+      return Left(
+        Failure(
+            error: response.data['message'],
+            statusCode: response.statusCode.toString()),
+      );
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.message.toString(),
+        ),
+      );
     }
   }
 }

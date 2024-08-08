@@ -1,6 +1,6 @@
+import 'package:final_assignment/features/appointment/presentation/view/appointment_view.dart';
 import 'package:final_assignment/features/home/presentation/view/bottom_view/chat_view.dart';
 import 'package:final_assignment/features/home/presentation/view/bottom_view/dashboard_view.dart';
-import 'package:final_assignment/features/home/presentation/view/bottom_view/explore_view.dart';
 import 'package:final_assignment/features/home/presentation/view/bottom_view/search_view.dart';
 import 'package:final_assignment/features/profile/presentation/view/profile_view.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +17,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   int selectedIndex = 0;
   List<Widget> lstScreen = [
     const DashboardView(),
-    const ExploreView(),
+    const AppointmentView(),
     const SearchView(),
     const ChatView(),
     const ProfileView(),
