@@ -253,12 +253,16 @@ class AuthRemoteDataSource {
     }
   }
 
-  Future<Either<Failure, bool>> sentOtp(String phone) async {
+  Future<Either<Failure, bool>> sendOtp({
+    required String contact,
+    required bool isPhone,
+  }) async {
     try {
       Response response = await dio.post(
         ApiEndPoints.forgetpassword,
         data: {
-          "phone": phone,
+          'contact': contact,
+          'contactMethod': isPhone ? 'phone' : 'email',
         },
       );
 
@@ -268,8 +272,9 @@ class AuthRemoteDataSource {
 
       return Left(
         Failure(
-            error: response.data['message'],
-            statusCode: response.statusCode.toString()),
+          error: response.data['message'],
+          statusCode: response.statusCode.toString(),
+        ),
       );
     } on DioException catch (e) {
       return Left(
@@ -280,18 +285,20 @@ class AuthRemoteDataSource {
     }
   }
 
-  // reset password from otp
-  Future<Either<Failure, bool>> resetPassword(
-      {required String phone,
-      required String otp,
-      required String password}) async {
+  Future<Either<Failure, bool>> resetPassword({
+    required String contact,
+    required String otp,
+    required String password,
+    required bool isPhone,
+  }) async {
     try {
       Response response = await dio.post(
         ApiEndPoints.resetpassword,
         data: {
-          "phone": phone,
-          "otp": otp,
-          "password": password,
+          'contact': contact,
+          'contactMethod': isPhone ? 'phone' : 'email',
+          'otp': otp,
+          'password': password,
         },
       );
 
@@ -301,8 +308,9 @@ class AuthRemoteDataSource {
 
       return Left(
         Failure(
-            error: response.data['message'],
-            statusCode: response.statusCode.toString()),
+          error: response.data['message'],
+          statusCode: response.statusCode.toString(),
+        ),
       );
     } on DioException catch (e) {
       return Left(

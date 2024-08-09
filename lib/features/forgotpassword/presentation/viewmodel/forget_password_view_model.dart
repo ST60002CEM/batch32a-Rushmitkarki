@@ -4,24 +4,17 @@ import 'package:final_assignment/features/forgotpassword/presentation/state/forg
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final forgotPasswordViewModelProvider =
-    StateNotifierProvider<ForgotPasswordViewModel, ForgotPasswordState>((ref) {
-  return ForgotPasswordViewModel(
-    authUseCase: ref.watch(authUseCaseProvider),
-  );
-});
-
-class ForgotPasswordViewModel extends StateNotifier<ForgotPasswordState> {
-  ForgotPasswordViewModel({
-    required this.authUseCase,
-  }) : super(ForgotPasswordState.initial());
+class ForgotPasswordViewModelProvider
+    extends StateNotifier<ForgotPasswordState> {
+  ForgotPasswordViewModelProvider({required this.authUseCase})
+      : super(ForgotPasswordState.initial());
 
   final AuthUseCase authUseCase;
 
-  sendOtp(String phoneNumber) async {
+  Future<void> sendOtp({required String contact, required bool isPhone}) async {
     state = state.copyWith(isLoading: true);
 
-    var data = await authUseCase.sendOtp(phoneNumber);
+    final data = await authUseCase.sendOtp(contact: contact, isPhone: isPhone);
     data.fold(
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);
@@ -34,24 +27,40 @@ class ForgotPasswordViewModel extends StateNotifier<ForgotPasswordState> {
     );
   }
 
-  verifyOtp(String otp, String phone, String password) async {
+  Future<void> verifyOtp({
+    required String contact,
+    required String otp,
+    required String password,
+    required bool isPhone,
+  }) async {
     state = state.copyWith(isLoading: true);
 
-    var data = await authUseCase.resetPass(
-      phone: phone,
-      password: password,
+    final data = await authUseCase.resetPassword(
+      contact: contact,
       otp: otp,
+      password: password,
+      isPhone: isPhone,
     );
     data.fold(
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);
+        showMySnackBar(message: l.error);
       },
       (r) {
-        state = state.copyWith(isLoading: false, isSent: false);
-
+        state = state.copyWith(
+            isLoading: false, isSent: false, passwordChanged: true);
         showMySnackBar(
             message: 'Password Changed Successfully', color: Colors.green);
       },
     );
   }
 }
+
+// Define the provider
+final forgotPasswordViewModelProvider =
+    StateNotifierProvider<ForgotPasswordViewModelProvider, ForgotPasswordState>(
+  (ref) {
+    final authUseCase = ref.read(authUseCaseProvider);
+    return ForgotPasswordViewModelProvider(authUseCase: authUseCase);
+  },
+);

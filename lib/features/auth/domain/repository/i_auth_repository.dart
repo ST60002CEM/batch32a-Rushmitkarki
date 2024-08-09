@@ -36,8 +36,12 @@ abstract class IAuthRepository {
 
   Future<Either<Failure, String>> uploadProfilePicture(File file);
 
-  Future<Either<Failure, bool>> sendOtp(String phone);
+  Future<Either<Failure, bool>> sendOtp(
+      {required String contact, required bool isPhone});
 
   Future<Either<Failure, bool>> resetPass(
-      {required String phone, required String password, required String otp});
+      {required String contact,
+      required String password,
+      required String otp,
+      required bool isPhone});
 }

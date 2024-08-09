@@ -54,16 +54,24 @@ class AuthUseCase {
     return authRepository.uploadProfilePicture(file);
   }
 
-  Future<Either<Failure, bool>> sendOtp(String phone) async {
-    return await authRepository.sendOtp(phone);
+  Future<Either<Failure, bool>> sendOtp({
+    required String contact,
+    required bool isPhone,
+  }) {
+    return authRepository.sendOtp(contact: contact, isPhone: isPhone);
   }
 
-  //resetPass
-  Future<Either<Failure, bool>> resetPass(
-      {required String phone,
-      required String password,
-      required String otp}) async {
-    return await authRepository.resetPass(
-        phone: phone, password: password, otp: otp);
+  Future<Either<Failure, bool>> resetPassword({
+    required String contact,
+    required String otp,
+    required String password,
+    required bool isPhone,
+  }) {
+    return authRepository.resetPass(
+      contact: contact,
+      otp: otp,
+      password: password,
+      isPhone: isPhone,
+    );
   }
 }
