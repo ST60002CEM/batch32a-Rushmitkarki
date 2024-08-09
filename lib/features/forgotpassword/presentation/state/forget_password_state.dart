@@ -4,6 +4,7 @@ class ForgotPasswordState {
   final bool isSent;
   final bool otpVerified;
   final bool passwordChanged;
+  final bool isPhoneSelected;
 
   ForgotPasswordState({
     required this.error,
@@ -11,6 +12,7 @@ class ForgotPasswordState {
     required this.isSent,
     required this.otpVerified,
     required this.passwordChanged,
+    required this.isPhoneSelected,
   });
 
   factory ForgotPasswordState.initial() {
@@ -20,6 +22,7 @@ class ForgotPasswordState {
       isSent: false,
       otpVerified: false,
       passwordChanged: false,
+      isPhoneSelected: true, // Default to phone
     );
   }
 
@@ -29,6 +32,7 @@ class ForgotPasswordState {
     bool? isSent,
     bool? otpVerified,
     bool? passwordChanged,
+    bool? isPhoneSelected,
   }) {
     return ForgotPasswordState(
       error: error ?? this.error,
@@ -36,6 +40,7 @@ class ForgotPasswordState {
       isSent: isSent ?? this.isSent,
       otpVerified: otpVerified ?? this.otpVerified,
       passwordChanged: passwordChanged ?? this.passwordChanged,
+      isPhoneSelected: isPhoneSelected ?? this.isPhoneSelected,
     );
   }
 }

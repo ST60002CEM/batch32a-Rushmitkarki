@@ -49,12 +49,11 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
           state = state.copyWith(isLoading: false, error: l.error);
         },
         (r) {
-          if (r.image != null) {
-            state = state.copyWith(
-                isLoading: false, authEntity: r, uploadImage: r.image);
-          } else {
-            state = state.copyWith(isLoading: false, authEntity: r);
-          }
+          state = state.copyWith(
+            isLoading: false,
+            authEntity: r,
+            uploadImage: r.image ?? '',
+          );
         },
       );
     } catch (e) {
@@ -157,9 +156,22 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);
       },
-      (r) {
-        state = state.copyWith(isLoading: false, error: null);
-        showMySnackBar(message: 'Profile updated', color: Colors.green);
+      (r) async {
+        final updatedUserData = await authUseCase.getCurrentUser();
+        updatedUserData.fold(
+          (l) {
+            state = state.copyWith(isLoading: false, error: l.error);
+          },
+          (r) {
+            state = state.copyWith(
+              isLoading: false,
+              authEntity: r,
+              uploadImage: r.image ?? '',
+              error: null,
+            );
+            showMySnackBar(message: 'Profile updated', color: Colors.green);
+          },
+        );
       },
     );
   }
