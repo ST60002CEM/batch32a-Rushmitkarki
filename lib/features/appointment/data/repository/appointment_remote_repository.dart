@@ -26,4 +26,9 @@ class AppointmentRemoteRepository implements AppointmentRepository {
   Future<Either<Failure, List<AppointmentEntity>>> getAppointments() {
     return remoteDataSource.fetchAppointments();
   }
+
+  @override
+  Future<Either<Failure, bool>> cancelAppointment(String id) {
+    return remoteDataSource.cancelAppointment(id);
+  }
 }

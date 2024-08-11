@@ -1,103 +1,149 @@
+import 'package:final_assignment/app/constants/api_endpoint.dart';
+import 'package:final_assignment/features/home/presentation/view/mycard.dart';
+import 'package:final_assignment/features/home/presentation/viewmodel/doctor_view_model.dart';
+import 'package:final_assignment/features/search/presentation/viewmodel/search_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchView extends StatefulWidget {
+class SearchView extends ConsumerStatefulWidget {
   const SearchView({super.key});
 
   @override
-  State<SearchView> createState() => _SearchViewState();
+  ConsumerState<SearchView> createState() => _SearchViewState();
 }
 
-class _SearchViewState extends State<SearchView> {
-  final TextEditingController _searchController = TextEditingController();
-  List<Doctor> _doctors = [];
-  List<Doctor> _filteredDoctors = [];
+class _SearchViewState extends ConsumerState<SearchView> {
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    // Initialize with some dummy data
-    _doctors = [
-      Doctor(name: "Dr. John Doe", speciality: "Cardiologist"),
-      Doctor(name: "Dr. Jane Smith", speciality: "Pediatrician"),
-      Doctor(name: "Dr. Mike Johnson", speciality: "Neurologist"),
-    ];
-    _filteredDoctors = _doctors;
-  }
 
-  void _filterDoctors(String query) {
-    setState(() {
-      _filteredDoctors = _doctors
-          .where((doctor) =>
-              doctor.name.toLowerCase().contains(query.toLowerCase()) ||
-              doctor.speciality.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+    // Add a listener to the scroll controller to detect when the user scrolls to the top
+    _scrollController.addListener(() {
+      if (_scrollController.offset <=
+              _scrollController.position.minScrollExtent &&
+          !_scrollController.position.outOfRange) {
+        ref.read(searchViewModelProvider.notifier).resetState();
+      }
+    });
+
+    // Fetch doctors initially
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(searchViewModelProvider.notifier).fetchDoctors();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final searchState = ref.watch(searchViewModelProvider);
+    final searchViewModel = ref.watch(searchViewModelProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search Doctors'),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                labelText: 'Search Doctors',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              onChanged: _filterDoctors,
-            ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () async {
+              final query = await showSearchDialog(context);
+              if (query != null) {
+                searchViewModel.searchDoctors(query: query);
+              }
+            },
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: _filteredDoctors.length,
-              itemBuilder: (context, index) {
-                final doctor = _filteredDoctors[index];
-                return MyCard(
-                  title: doctor.name,
-                  subtitle: doctor.speciality,
-                );
-              },
-            ),
+          IconButton(
+            icon: const Icon(Icons.sort),
+            onPressed: () async {
+              final sortOrder = await showSortDialog(context);
+              if (sortOrder != null) {
+                searchViewModel.searchDoctors(sortOrder: sortOrder);
+              }
+            },
           ),
         ],
       ),
+      body: searchState.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : searchState.error.isNotEmpty
+              ? Center(child: Text('Error: ${searchState.error}'))
+              : GridView.builder(
+                  controller: _scrollController,
+                  padding: const EdgeInsets.all(8),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.7,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemCount: searchState.doctors.length,
+                  itemBuilder: (context, index) {
+                    final doctor = searchState.doctors[index];
+                    return MyCard(
+                      title: doctor.doctorName,
+                      subtitle: doctor.doctorField,
+                      imageUrl:
+                          '${ApiEndPoints.doctorImageUrl}${doctor.doctorImage}',
+                      onFavoritePressed: () {
+                        ref
+                            .read(doctorViewModelProvider.notifier)
+                            .favorite(doctor.doctorid);
+                      },
+                    );
+                  },
+                ),
     );
   }
-}
 
-class Doctor {
-  final String name;
-  final String speciality;
+  Future<String?> showSearchDialog(BuildContext context) async {
+    final TextEditingController searchController = TextEditingController();
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Search'),
+          content: TextField(
+            controller: searchController,
+            decoration: const InputDecoration(hintText: 'Enter doctor name'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(searchController.text);
+              },
+              child: const Text('Search'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-  Doctor({required this.name, required this.speciality});
-}
-
-class MyCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-
-  const MyCard({
-    super.key,
-    required this.title,
-    required this.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        title: Text(title),
-        subtitle: Text(subtitle),
-      ),
+  Future<String?> showSortDialog(BuildContext context) async {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Sort'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                title: const Text('Ascending'),
+                onTap: () {
+                  Navigator.of(context).pop('asc');
+                },
+              ),
+              ListTile(
+                title: const Text('Descending'),
+                onTap: () {
+                  Navigator.of(context).pop('desc');
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:final_assignment/app/navigator_key/navigator_key.dart';
 import 'package:final_assignment/core/common/show_my_snackbar.dart';
+import 'package:final_assignment/core/google_service/google_service.dart';
 import 'package:final_assignment/core/shared_prefs/user_shared_prefs.dart';
 import 'package:final_assignment/features/auth/domain/entity/auth_entity.dart';
 import 'package:final_assignment/features/auth/domain/usecases/auth_usecase.dart';
@@ -18,18 +19,21 @@ final profileViewmodelProvider =
               authUseCase: ref.watch(authUseCaseProvider),
               navigator: ref.watch(profileNavigatorProvider),
               userSharedPrefs: ref.watch(userSharedPrefsProvider),
+              googleSignInService: ref.watch(googleSignInServiceProvider),
             ));
 
 class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
   final AuthUseCase authUseCase;
   final ProfileNavigator navigator;
   final UserSharedPrefs userSharedPrefs;
+  final GoogleSignInService googleSignInService;
   late LocalAuthentication _localAuth;
 
   ProfileViewmodel({
     required this.navigator,
     required this.userSharedPrefs,
     required this.authUseCase,
+    required this.googleSignInService,
   }) : super(CurrentProfileState.initial()) {
     initialize();
   }
@@ -146,6 +150,7 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
 
   void logout() {
     userSharedPrefs.removeUserToken();
+    googleSignInService.signOutFromGoogle();
     navigator.openLoginView();
   }
 
@@ -178,6 +183,10 @@ class ProfileViewmodel extends StateNotifier<CurrentProfileState> {
 
   void openAppointmentList() {
     navigator.openAppointmentDetail();
+  }
+
+  void openInsuranceList() {
+    navigator.navigateToInsuranceView();
   }
 
   Future<void> uploadProfilePicture(File file) async {

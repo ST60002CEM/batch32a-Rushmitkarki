@@ -48,6 +48,15 @@ class MockProfileNavigator extends _i1.Mock implements _i3.ProfileNavigator {
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  void navigateToInsuranceView() => super.noSuchMethod(
+        Invocation.method(
+          #navigateToInsuranceView,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [UserSharedPrefs].

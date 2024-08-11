@@ -1,4 +1,5 @@
 import 'package:final_assignment/core/common/show_my_snackbar.dart';
+import 'package:final_assignment/core/google_service/google_service.dart';
 import 'package:final_assignment/features/auth/domain/entity/auth_entity.dart';
 import 'package:final_assignment/features/auth/domain/usecases/auth_usecase.dart';
 import 'package:final_assignment/features/auth/presentation/navigator/login_navigator.dart';
@@ -20,6 +21,7 @@ final authViewModelProvider =
           ref.read(authUseCaseProvider),
           ref.read(loginNavigatorProvider),
           ref.read(forgetPasswordViewNavigatorProvider),
+          ref.read(googleSignInServiceProvider),
         ));
 
 class AuthViewModel extends StateNotifier<AuthState> {
@@ -27,10 +29,12 @@ class AuthViewModel extends StateNotifier<AuthState> {
     this.authUseCase,
     this.navigator,
     this.forgetPasswordNavigator,
+    this.googleSignInService,
   ) : super(AuthState.initial());
 
   final AuthUseCase authUseCase;
   final LoginViewNavigator navigator;
+  final GoogleSignInService googleSignInService;
 
   final ForgotPasswordViewNavigator forgetPasswordNavigator;
 
@@ -120,6 +124,46 @@ class AuthViewModel extends StateNotifier<AuthState> {
         navigator.openHomeView();
       },
     );
+  }
+
+  Future<void> googleSignIn() async {
+    state = state.copyWith(isLoading: true);
+    var data = await googleSignInService.signInWithGoogle();
+    data.fold(
+      (failure) {
+        state = state.copyWith(isLoading: false, error: failure.error);
+        showMySnackBar(message: failure.error, color: Colors.red);
+      },
+      (google) async {
+        state = state.copyWith(isLoading: false, error: null);
+        final token = google['idToken'];
+        final user = await authUseCase.getUserByGoogle(token);
+        user.fold((l) {
+          state = state.copyWith(isLoading: false, error: l.error);
+          showMySnackBar(message: l.error);
+        }, (r) {
+          debugPrint(r.email!);
+          if (r.email!.isEmpty) {
+            googleLogin(token: token, password: '12345678');
+          } else {
+            googleLogin(token: token);
+          }
+          state = state.copyWith(isLoading: false);
+        });
+      },
+    );
+  }
+
+  googleLogin({required String token, String? password}) async {
+    state = state.copyWith(isLoading: true);
+    final data = await authUseCase.googleLogin(token, password);
+    data.fold((l) {
+      state = state.copyWith(isLoading: false, error: l.error);
+      showMySnackBar(message: l.error);
+    }, (r) {
+      state = state.copyWith(isLoading: false);
+      navigator.openHomeView();
+    });
   }
 
   void openForgotPasswordView() {

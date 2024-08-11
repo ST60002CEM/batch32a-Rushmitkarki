@@ -15,7 +15,7 @@ class AuthApiModel extends Equatable {
   final String firstName;
   final String lastName;
   final String email;
-  final String phone;
+  final String? phone;
   final String? image;
   final String? password;
 
@@ -45,7 +45,7 @@ class AuthApiModel extends Equatable {
       lName: lastName,
       email: email,
       password: password,
-      phone: phone,
+      phone: phone ?? '',
       image: image ?? '',
     );
   }

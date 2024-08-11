@@ -31,6 +31,10 @@ class SearchState {
     );
   }
 
+  get selectedSortOption => null;
+
+  get searchResults => null;
+
   SearchState copyWith({
     List<DoctorEntity>? doctors,
     bool? hasReachedMax,

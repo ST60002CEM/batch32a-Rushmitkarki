@@ -79,4 +79,16 @@ class AuthLocalRepository implements IAuthRepository {
     // TODO: implement sendOtp
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, AuthEntity>> getUserByGoogle(String token) {
+    // TODO: implement getUserByGoogle
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, bool>> googleLogin(String? token, String? password) {
+    // TODO: implement googleLogin
+    throw UnimplementedError();
+  }
 }

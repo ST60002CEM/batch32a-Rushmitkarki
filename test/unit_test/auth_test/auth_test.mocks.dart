@@ -294,6 +294,161 @@ class MockAuthUseCase extends _i1.Mock implements _i5.AuthUseCase {
           ),
         )),
       ) as _i6.Future<_i4.Either<_i7.Failure, String>>);
+
+  @override
+  _i6.Future<_i4.Either<_i7.Failure, bool>> sendOtp({
+    required String? contact,
+    required bool? isPhone,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #sendOtp,
+          [],
+          {
+            #contact: contact,
+            #isPhone: isPhone,
+          },
+        ),
+        returnValue: _i6.Future<_i4.Either<_i7.Failure, bool>>.value(
+            _FakeEither_2<_i7.Failure, bool>(
+          this,
+          Invocation.method(
+            #sendOtp,
+            [],
+            {
+              #contact: contact,
+              #isPhone: isPhone,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i4.Either<_i7.Failure, bool>>.value(
+                _FakeEither_2<_i7.Failure, bool>(
+          this,
+          Invocation.method(
+            #sendOtp,
+            [],
+            {
+              #contact: contact,
+              #isPhone: isPhone,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i4.Either<_i7.Failure, bool>>);
+
+  @override
+  _i6.Future<_i4.Either<_i7.Failure, bool>> resetPassword({
+    required String? contact,
+    required String? otp,
+    required String? password,
+    required bool? isPhone,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #resetPassword,
+          [],
+          {
+            #contact: contact,
+            #otp: otp,
+            #password: password,
+            #isPhone: isPhone,
+          },
+        ),
+        returnValue: _i6.Future<_i4.Either<_i7.Failure, bool>>.value(
+            _FakeEither_2<_i7.Failure, bool>(
+          this,
+          Invocation.method(
+            #resetPassword,
+            [],
+            {
+              #contact: contact,
+              #otp: otp,
+              #password: password,
+              #isPhone: isPhone,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i4.Either<_i7.Failure, bool>>.value(
+                _FakeEither_2<_i7.Failure, bool>(
+          this,
+          Invocation.method(
+            #resetPassword,
+            [],
+            {
+              #contact: contact,
+              #otp: otp,
+              #password: password,
+              #isPhone: isPhone,
+            },
+          ),
+        )),
+      ) as _i6.Future<_i4.Either<_i7.Failure, bool>>);
+
+  @override
+  _i6.Future<_i4.Either<_i7.Failure, bool>> googleLogin(
+    String? token,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #googleLogin,
+          [
+            token,
+            password,
+          ],
+        ),
+        returnValue: _i6.Future<_i4.Either<_i7.Failure, bool>>.value(
+            _FakeEither_2<_i7.Failure, bool>(
+          this,
+          Invocation.method(
+            #googleLogin,
+            [
+              token,
+              password,
+            ],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i4.Either<_i7.Failure, bool>>.value(
+                _FakeEither_2<_i7.Failure, bool>(
+          this,
+          Invocation.method(
+            #googleLogin,
+            [
+              token,
+              password,
+            ],
+          ),
+        )),
+      ) as _i6.Future<_i4.Either<_i7.Failure, bool>>);
+
+  @override
+  _i6.Future<_i4.Either<_i7.Failure, _i8.AuthEntity>> getUserByGoogle(
+          String? token) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getUserByGoogle,
+          [token],
+        ),
+        returnValue: _i6.Future<_i4.Either<_i7.Failure, _i8.AuthEntity>>.value(
+            _FakeEither_2<_i7.Failure, _i8.AuthEntity>(
+          this,
+          Invocation.method(
+            #getUserByGoogle,
+            [token],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i4.Either<_i7.Failure, _i8.AuthEntity>>.value(
+                _FakeEither_2<_i7.Failure, _i8.AuthEntity>(
+          this,
+          Invocation.method(
+            #getUserByGoogle,
+            [token],
+          ),
+        )),
+      ) as _i6.Future<_i4.Either<_i7.Failure, _i8.AuthEntity>>);
 }
 
 /// A class which mocks [LoginViewNavigator].

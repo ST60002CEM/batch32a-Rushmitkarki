@@ -74,4 +74,12 @@ class AuthUseCase {
       isPhone: isPhone,
     );
   }
+
+  Future<Either<Failure, bool>> googleLogin(String? token, String? password) {
+    return authRepository.googleLogin(token ?? '', password);
+  }
+
+  Future<Either<Failure, AuthEntity>> getUserByGoogle(String token) {
+    return authRepository.getUserByGoogle(token);
+  }
 }

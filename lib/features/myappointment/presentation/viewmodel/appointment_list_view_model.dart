@@ -34,4 +34,23 @@ class AppointmentListViewModel extends StateNotifier<AppointmentListState> {
       },
     );
   }
+
+//   cancel appointment
+  Future<void> cancelAppointment(String id) async {
+    state = state.copyWith(isLoading: true);
+    final result = await appointmentUsecase.cancelAppointment(id);
+    result.fold(
+      (l) {
+        state = state.copyWith(isLoading: false, error: l.error);
+      },
+      (r) {
+        state = state.copyWith(
+          isLoading: false,
+          appointments: state.appointments
+              .where((appointment) => appointment.id != id)
+              .toList(),
+        );
+      },
+    );
+  }
 }

@@ -242,25 +242,25 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       const SizedBox(
                         height: 25.0,
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Icon(
-                            Icons.facebook,
-                            color: Colors.blue,
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.mail,
-                                color: Colors.pink,
-                              ),
-                              Text('Mail'),
-                            ],
-                          ),
-                          Icon(
-                            Icons.apple,
-                            color: Colors.black,
+                          GestureDetector(
+                            onTap: () {
+                              ref
+                                  .read(authViewModelProvider.notifier)
+                                  .googleSignIn();
+                            },
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.mail,
+                                  color: Colors.red,
+                                ),
+                                SizedBox(width: 8),
+                                Text('Sign in with Google'),
+                              ],
+                            ),
                           ),
                         ],
                       ),

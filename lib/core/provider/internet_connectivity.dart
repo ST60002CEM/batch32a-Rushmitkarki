@@ -17,9 +17,11 @@ class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
   ConnectivityStatusNotifier() : super(ConnectivityStatus.isConnected) {
     lastResult = state;
 
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      if (result == ConnectivityResult.mobile ||
-          result == ConnectivityResult.wifi) {
+    Connectivity()
+        .onConnectivityChanged
+        .listen((List<ConnectivityResult> result) {
+      if (result.first == ConnectivityResult.mobile ||
+          result.first == ConnectivityResult.wifi) {
         newState = ConnectivityStatus.isConnected;
       } else {
         newState = ConnectivityStatus.isDisconnected;

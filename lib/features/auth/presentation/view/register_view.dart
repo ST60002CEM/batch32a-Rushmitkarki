@@ -16,7 +16,8 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   @override
   void dispose() {
@@ -153,11 +154,13 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
                             password: passwordController.text,
                           );
 
-                          ref.read(authViewModelProvider.notifier).registerUser(authEntity);
+                          ref
+                              .read(authViewModelProvider.notifier)
+                              .registerUser(authEntity);
                         },
                         child: const Text(
                           'Register',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                       const SizedBox(height: 20.0),
