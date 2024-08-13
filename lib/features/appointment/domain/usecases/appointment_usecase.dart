@@ -20,4 +20,9 @@ class AppointmentUsecase {
   Future<Either<Failure, List<AppointmentEntity>>> getAppointments() {
     return repository.getAppointments();
   }
+
+//   cancel appointment
+  Future<Either<Failure, bool>> cancelAppointment(String id) {
+    return repository.cancelAppointment(id);
+  }
 }

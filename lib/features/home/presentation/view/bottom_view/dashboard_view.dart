@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:all_sensors2/all_sensors2.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_assignment/app/constants/api_endpoint.dart';
@@ -29,19 +28,19 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
   bool showYesNoDialog = true;
   bool isDialogShowing = false;
 
-  List<double> _gyroscopeValues = [];
+  final List<double> _gyroscopeValues = [];
   final List<StreamSubscription<dynamic>> _streamSubscription = [];
 
   @override
   void initState() {
+    super.initState();
+    // Uncomment and modify this if you want to use gyroscope functionality
     // _streamSubscription.add(gyroscopeEvents!.listen((GyroscopeEvent event) {
     //   setState(() {
     //     _gyroscopeValues = <double>[event.x, event.y, event.z];
     //     _checkGyroscopeValues(_gyroscopeValues);
     //   });
     // }));
-
-    super.initState();
   }
 
   void _checkGyroscopeValues(List<double> values) async {
@@ -61,7 +60,7 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
         ).show();
 
         isDialogShowing = false;
-        if (result) {
+        if (result == true) {
           showMySnackBar(
             message: 'Logged Out Successfully!',
             color: Colors.green,
@@ -94,14 +93,9 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: RefreshIndicator(
-          color: Colors.greenAccent,
-          backgroundColor: Colors.blueAccent,
-          onRefresh: () async {
-            ref.read(doctorViewModelProvider.notifier).resetState();
-          },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               CarouselSlider(
@@ -123,13 +117,14 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
               const Text('Doctors List',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              Expanded(
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.6,
                 child: GridView.builder(
                   padding: const EdgeInsets.all(8),
                   physics: const AlwaysScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 0.7,
+                    childAspectRatio: 0.6,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                   ),
@@ -141,11 +136,11 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
                       subtitle: doctor.doctorField,
                       imageUrl:
                           '${ApiEndPoints.doctorImageUrl}${doctor.doctorImage}',
-                        onFavoritePressed: () {
-                          ref
-                              .read(doctorViewModelProvider.notifier)
-                              .favorite(doctor.doctorid);
-                        },
+                      onFavoritePressed: () {
+                        ref
+                            .read(doctorViewModelProvider.notifier)
+                            .favorite(doctor.doctorid);
+                      },
                     );
                   },
                 ),
@@ -161,5 +156,13 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    for (var subscription in _streamSubscription) {
+      subscription.cancel();
+    }
+    super.dispose();
   }
 }

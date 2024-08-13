@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:khalti_checkout_flutter/khalti_checkout_flutter.dart';
 
 class KhaltiSDKDemo extends StatefulWidget {
-  const KhaltiSDKDemo({super.key});
+  const KhaltiSDKDemo({super.key, required this.pidx});
+
+  final String pidx;
 
   @override
   State<KhaltiSDKDemo> createState() => _KhaltiSDKDemoState();
@@ -12,9 +14,6 @@ class KhaltiSDKDemo extends StatefulWidget {
 
 class _KhaltiSDKDemoState extends State<KhaltiSDKDemo> {
   late final Future<Khalti?> khalti;
-
-  String pidx =
-      'ZyzCEMLFz2QYFYfERGh8LE'; // Should be generated via a server-side POST request.
 
   PaymentResult? paymentResult;
 
@@ -24,7 +23,7 @@ class _KhaltiSDKDemoState extends State<KhaltiSDKDemo> {
     final payConfig = KhaltiPayConfig(
       publicKey: '5826720c2d604a8eae0be763afaabb41',
       // This is a dummy public key for example purpose
-      pidx: 'n7tDjja49Q5wPsLeqffp9d',
+      pidx: widget!.pidx,
       environment: Environment.test,
     );
 
@@ -71,7 +70,7 @@ class _KhaltiSDKDemoState extends State<KhaltiSDKDemo> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/seru.png',
+                  'assets/images/seru.png',
                   height: 200,
                   width: 200,
                 ),
@@ -88,7 +87,7 @@ class _KhaltiSDKDemoState extends State<KhaltiSDKDemo> {
                 const SizedBox(height: 120),
                 paymentResult == null
                     ? Text(
-                        'pidx: $pidx',
+                        'pidx: $widget!.pidx',
                         style: const TextStyle(fontSize: 15),
                       )
                     : Column(
@@ -107,7 +106,7 @@ class _KhaltiSDKDemoState extends State<KhaltiSDKDemo> {
                       ),
                 const SizedBox(height: 120),
                 const Text(
-                  'This is a demo application developed by some merchant.',
+                  'Make an payment to clam the insurance package.',
                   style: TextStyle(fontSize: 12),
                 )
               ],

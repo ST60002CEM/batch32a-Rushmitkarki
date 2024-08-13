@@ -70,4 +70,28 @@ class AppointmentRemoteDataSource {
       throw Exception('Failed to load appointments: $e');
     }
   }
+
+//   cancel appointment
+  Future<Either<Failure, bool>> cancelAppointment(String id) async {
+    try {
+      String? token;
+      final data = await userSharedPreferences.getUserToken();
+
+      data.fold((l) => token = null, (r) => token = r);
+
+      final response = await dio.put(
+        '${ApiEndPoints.cancelAppointment}/$id',
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      if (response.statusCode == 200) {
+        return Right(true);
+      } else {
+        throw Exception('Failed to cancel appointment');
+      }
+    } catch (e) {
+      return Left(Failure(error: 'Failed to cancel appointment: $e'));
+    }
+  }
 }

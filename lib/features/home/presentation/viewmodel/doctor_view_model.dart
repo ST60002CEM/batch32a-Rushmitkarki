@@ -9,8 +9,8 @@ final doctorViewModelProvider =
     StateNotifierProvider<DoctorViewModel, DoctorState>(
   (ref) {
     final doctorUsecase = ref.read(doctorUsecaseProvider);
-    final favouriteUsecase=ref.read(fetchFavouriteDoctorsUseCaseProvider);
-    return DoctorViewModel(doctorUsecase,favouriteUsecase);
+    final favouriteUsecase = ref.read(fetchFavouriteDoctorsUseCaseProvider);
+    return DoctorViewModel(doctorUsecase, favouriteUsecase);
   },
 );
 
@@ -18,7 +18,10 @@ class DoctorViewModel extends StateNotifier<DoctorState> {
   final DoctorUsecase _doctorUsecase;
   final FavouriteDoctorsUseCase _favouriteUsecase;
 
-  DoctorViewModel(this._doctorUsecase,this._favouriteUsecase) : super(DoctorState.initial());
+  DoctorViewModel(this._doctorUsecase, this._favouriteUsecase)
+      : super(DoctorState.initial()) {
+    getDoctors();
+  }
 
   Future<void> resetState() async {
     state = DoctorState.initial();
@@ -55,15 +58,16 @@ class DoctorViewModel extends StateNotifier<DoctorState> {
     );
   }
 
-   favorite(String? doctorid) async{
+  favorite(String? doctorid) async {
     final result = await _favouriteUsecase.addFavouriteDoctor(doctorid!);
     result.fold(
       (failure) {
         // showMySnackBar(message: failure.error, color: Colors.red);
       },
       (data) {
-        showMySnackBar(message: 'Doctor added to favorite' , color: Colors.green);
+        showMySnackBar(
+            message: 'Doctor added to favorite', color: Colors.green);
       },
     );
-   }
+  }
 }

@@ -44,4 +44,8 @@ abstract class IAuthRepository {
       required String password,
       required String otp,
       required bool isPhone});
+
+  Future<Either<Failure, AuthEntity>> getUserByGoogle(String token);
+
+  Future<Either<Failure, bool>> googleLogin(String token, String? password);
 }

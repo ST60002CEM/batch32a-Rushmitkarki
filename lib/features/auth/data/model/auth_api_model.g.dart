@@ -12,7 +12,7 @@ AuthApiModel _$AuthApiModelFromJson(Map<String, dynamic> json) => AuthApiModel(
       lastName: json['lastName'] as String,
       email: json['email'] as String,
       password: json['password'] as String?,
-      phone: json['phone'] as String,
+      phone: json['phone'] as String?,
       image: json['image'] as String?,
     );
 

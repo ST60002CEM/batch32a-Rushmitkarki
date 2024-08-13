@@ -1,5 +1,6 @@
 {
     "cmake.ignoreCMakeListsMissing": true,
     "java.compile.nullAnalysis.mode": "automatic",
-    "dart.showTodos": false
+    "dart.showTodos": false,
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

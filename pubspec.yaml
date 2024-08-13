@@ -50,7 +50,7 @@ dependencies:
   permission_handler: ^11.3.1
   hive_flutter: ^1.1.0
   json_annotation: ^4.9.0
-  connectivity_plus: ^4.0.1
+  connectivity_plus:
   local_auth: ^2.2.0
   awesome_dialog: ^3.2.1
   all_sensors2: ^1.0.1
@@ -58,6 +58,12 @@ dependencies:
   intl: ^0.19.0
   carousel_slider: ^4.2.1
   flutter_slidable: ^3.1.1
+  google_sign_in: ^6.2.1
+  dialog_flowtter: ^0.2.0-nullsafety.0
+  flutter_dialogs: ^3.0.0
+
+  khalti_checkout_flutter: ^1.0.0-dev.5
+  socket_io_client: ^2.0.3+1
 
 dev_dependencies:
   flutter_test:
@@ -111,6 +117,7 @@ flutter:
         - asset: assets/fonts/Montserrat-Black.ttf
   #       - asset: assets/fonts/Montserrat-Bold.ttf
   #         weight: 700
+
   # #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

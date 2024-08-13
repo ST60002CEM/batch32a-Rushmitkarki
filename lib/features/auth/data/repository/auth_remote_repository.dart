@@ -86,4 +86,14 @@ class AuthRemoteRepository implements IAuthRepository {
       isPhone: isPhone,
     );
   }
+
+  @override
+  Future<Either<Failure, AuthEntity>> getUserByGoogle(String token) {
+    return authRemoteDataSource.getUserByGoogle(token);
+  }
+
+  @override
+  Future<Either<Failure, bool>> googleLogin(String token, String? password) {
+    return authRemoteDataSource.googleLogin(token, password);
+  }
 }

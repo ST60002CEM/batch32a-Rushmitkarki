@@ -1,3 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">final_assignment</string>
+    <string name="default_web_client_id">564494873901-2vgpnbr4ijghp35sa7oqt3htjrnqj903.apps.googleusercontent.com</string>
 </resources>

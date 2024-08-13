@@ -52,7 +52,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
               text: "Insurance",
               icon: "assets/icons/insurance.svg",
               press: () {
-                // Navigate to Notifications screen
+                ref.read(profileViewmodelProvider.notifier).openInsuranceList();
               },
             ),
             ProfileMenu(

@@ -3,6 +3,7 @@ class ApiEndPoints {
 
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
+
   static const String baseUrl = 'http://192.168.1.77:5000/api/';
 
   // static const String baseUrl = 'http://192.168.137.1:5000/api/';
@@ -20,9 +21,13 @@ class ApiEndPoints {
   static const String imageUrlprofile =
       "http://192.168.1.77:5000/profile_pictures/";
 
+  static const String googleLogin = "user/google";
+  static const String getUserByGoogleEmail = "user/getGoogleUser";
+
   // --------------------------Doctor Routes--------------------------
   static const String getDoctors = "doctor/get_all_doctors";
   static const String paginationDoctors = "doctor/pagination";
+
   static const String doctorImageUrl = "http://192.168.1.77:5000/doctors/";
 
   // static const String doctorImageUrl = "http://192.168.137.1:5000/doctors/";
@@ -60,4 +65,12 @@ class ApiEndPoints {
   static const String addgroup = 'chat/groupadd';
   static const String removegroup = 'chat/groupremove';
   static const String groupleave = 'chat/groupleave';
+
+//   ____________________________message_____________________________
+  static const String sendmessage = 'message/send';
+  static const String allmessage = 'message/';
+
+//   _____________________________khalti________________________________
+  static const String khalti = 'payment/initialize_khalti';
+  static const String completepayment = 'payment/complete-khalti-payment';
 }
