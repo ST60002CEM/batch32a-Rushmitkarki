@@ -7,12 +7,12 @@ class MyCard extends StatelessWidget {
   final VoidCallback? onFavoritePressed;
 
   const MyCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.imageUrl,
     this.onFavoritePressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,8 @@ class MyCard extends StatelessWidget {
               width: double.infinity,
             ),
           ListTile(
-            title:
-
-                Text(title),
-
+            title: Text(title),
             subtitle: Row(
-
               children: [
                 Text(subtitle),
                 IconButton(
@@ -41,10 +37,8 @@ class MyCard extends StatelessWidget {
                 ),
               ],
             ),
-
           ),
-        //   favoriteButton(),
-
+          //   favoriteButton(),
         ],
       ),
     );

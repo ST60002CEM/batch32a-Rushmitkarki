@@ -63,7 +63,7 @@ dependencies:
   flutter_dialogs: ^3.0.0
 
   khalti_checkout_flutter: ^1.0.0-dev.5
-
+  socket_io_client: ^2.0.3+1
 
 dev_dependencies:
   flutter_test:
@@ -117,6 +117,7 @@ flutter:
         - asset: assets/fonts/Montserrat-Black.ttf
   #       - asset: assets/fonts/Montserrat-Bold.ttf
   #         weight: 700
+
   # #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -13,10 +13,6 @@ ChatApiModel _$ChatApiModelFromJson(Map<String, dynamic> json) => ChatApiModel(
       users: (json['users'] as List<dynamic>)
           .map((e) => AuthApiModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      latestMessage: json['latestMessage'] == null
-          ? null
-          : MessageApiModel.fromJson(
-              json['latestMessage'] as Map<String, dynamic>),
       groupAdmin: json['groupAdmin'] == null
           ? null
           : AuthApiModel.fromJson(json['groupAdmin'] as Map<String, dynamic>),
@@ -28,6 +24,5 @@ Map<String, dynamic> _$ChatApiModelToJson(ChatApiModel instance) =>
       'chatName': instance.chatName,
       'isGroupChat': instance.isGroupChat,
       'users': instance.users,
-      'latestMessage': instance.latestMessage,
       'groupAdmin': instance.groupAdmin,
     };
