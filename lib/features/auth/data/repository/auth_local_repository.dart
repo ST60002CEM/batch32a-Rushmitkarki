@@ -91,4 +91,10 @@ class AuthLocalRepository implements IAuthRepository {
     // TODO: implement googleLogin
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, List<AuthEntity>>> searchUser(String query) {
+    // TODO: implement searchUser
+    throw UnimplementedError();
+  }
 }

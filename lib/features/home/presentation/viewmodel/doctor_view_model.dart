@@ -34,7 +34,7 @@ class DoctorViewModel extends StateNotifier<DoctorState> {
     state = state.copyWith(isLoading: true);
     final page = state.page + 1;
 
-    final result = await _doctorUsecase.paginateDoctors(page, 10);
+    final result = await _doctorUsecase.paginateDoctors(page, 10, '');
     result.fold(
       (failure) {
         state = state.copyWith(

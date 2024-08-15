@@ -10,6 +10,7 @@ final doctorRepositoryProvider = Provider<IDoctorRepository>((ref) {
 
 abstract class IDoctorRepository {
   Future<Either<Failure, List<DoctorEntity>>> getAllDoctors();
+
   Future<Either<Failure, List<DoctorEntity>>> paginateDoctors(
-      int page, int limit);
+      int page, int limit, String search);
 }

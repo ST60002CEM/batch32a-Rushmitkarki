@@ -21,20 +21,23 @@ class DoctorRemoteDataSource {
 
   // get data from post with pagination
   Future<Either<Failure, List<DoctorEntity>>> pagination(
-      int page, int limit) async {
+      int page, int limit, String search) async {
     try {
       final response = await _dio.get(
         ApiEndPoints.paginationDoctors,
         queryParameters: {
           'page': page,
           'limit': limit,
+          'search': search,
         },
       );
       final data = DoctorDto.fromJson(response.data).doctors;
       final doctors = doctorApiModel.toEntityList(data);
       return Right(doctors);
     } on DioException catch (e) {
-      return Left(Failure( error:e.error.toString(), ));
+      return Left(Failure(
+        error: e.error.toString(),
+      ));
     }
   }
 }

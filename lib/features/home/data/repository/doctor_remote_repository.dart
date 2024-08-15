@@ -14,6 +14,7 @@ class DoctorRemoteRepository implements IDoctorRepository {
   final DoctorRemoteDataSource doctorRemoteDataSource;
 
   DoctorRemoteRepository({required this.doctorRemoteDataSource});
+
   @override
   Future<Either<Failure, List<DoctorEntity>>> getAllDoctors() {
     // TODO: implement getAllDoctors
@@ -22,7 +23,7 @@ class DoctorRemoteRepository implements IDoctorRepository {
 
   @override
   Future<Either<Failure, List<DoctorEntity>>> paginateDoctors(
-      int page, int limit) {
-    return doctorRemoteDataSource.pagination(page, limit);
+      int page, int limit, String search) {
+    return doctorRemoteDataSource.pagination(page, limit, search);
   }
 }

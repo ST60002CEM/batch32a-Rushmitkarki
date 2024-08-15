@@ -6,6 +6,7 @@ import 'package:final_assignment/app/constants/api_endpoint.dart';
 import 'package:final_assignment/core/failure/failure.dart';
 import 'package:final_assignment/core/networking/remote/http_service.dart';
 import 'package:final_assignment/core/shared_prefs/user_shared_prefs.dart';
+import 'package:final_assignment/features/auth/data/dto/search_users_dto.dart';
 import 'package:final_assignment/features/auth/data/model/auth_api_model.dart';
 import 'package:final_assignment/features/auth/domain/entity/auth_entity.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -366,6 +367,58 @@ class AuthRemoteDataSource {
       );
     } catch (e) {
       return Left(Failure(error: e.toString()));
+    }
+  }
+
+//   search user
+  Future<Either<Failure, List<AuthEntity>>> searchUser(String query) async {
+    try {
+      String? token;
+      var data = await userSharedPrefs.getUserToken();
+      data.fold(
+        (l) => token = null,
+        (r) => token = r,
+      );
+
+      if (token == null) {
+        return Left(
+          Failure(
+            error: 'No token found',
+          ),
+        );
+      }
+
+      Response response = await dio.get(
+        ApiEndPoints.searchUser,
+        queryParameters: {
+          'query': query,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final searchUsersDto = SearchUsersDto.fromJson(response.data);
+        final users = searchUsersDto.users.map((e) => e.toEntity()).toList();
+        return Right(users);
+      } else {
+        return Left(
+          Failure(
+            error: response.data['message'],
+            statusCode: response.statusCode.toString(),
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return Left(
+        Failure(
+          error: e.error.toString(),
+          statusCode: e.response?.statusCode.toString() ?? '0',
+        ),
+      );
     }
   }
 }
