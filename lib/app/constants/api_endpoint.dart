@@ -4,9 +4,9 @@ class ApiEndPoints {
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
 
-  static const String baseUrl = 'http://192.168.1.77:5000/api/';
+  // static const String baseUrl = 'http://192.168.1.77:5000/api/';
 
-  // static const String baseUrl = 'http://192.168.137.1:5000/api/';
+  static const String baseUrl = 'http://192.168.137.1:5000/api/';
 
   // --------------------------Auth Routes--------------------------
   static const String loginUser = "user/login";
@@ -19,18 +19,20 @@ class ApiEndPoints {
   static const String updateProfile = 'user/update_profile';
   static const String profilepicture = 'user/profile_picture';
   static const String imageUrlprofile =
-      "http://192.168.1.77:5000/profile_pictures/";
+      "http://192.168.137.1:5000/profile_pictures/";
 
   static const String googleLogin = "user/google";
   static const String getUserByGoogleEmail = "user/getGoogleUser";
+
+  static const String searchUser = 'user/search_users';
 
   // --------------------------Doctor Routes--------------------------
   static const String getDoctors = "doctor/get_all_doctors";
   static const String paginationDoctors = "doctor/pagination";
 
-  static const String doctorImageUrl = "http://192.168.1.77:5000/doctors/";
+  // static const String doctorImageUrl = "http://192.168.1.77:5000/doctors/";
 
-  // static const String doctorImageUrl = "http://192.168.137.1:5000/doctors/";
+  static const String doctorImageUrl = "http://192.168.137.1:5000/doctors/";
 
 // -------------------------------Appointment Route---------------------------
   static const String createAppointment = "booking/create_appointments";
@@ -60,15 +62,15 @@ class ApiEndPoints {
   //----------------------------chat---------------------------------
   static const String createChat = 'chat/create';
   static const String getChat = 'chat/fetch';
-  static const String creategroup = 'chat/group';
+  static const String createGroup = 'chat/group';
   static const String rename = 'chat/rename';
-  static const String addgroup = 'chat/groupadd';
-  static const String removegroup = 'chat/groupremove';
-  static const String groupleave = 'chat/groupleave';
+  static const String addGroup = 'chat/groupadd';
+  static const String removeGroup = 'chat/groupremove';
+  static const String groupLeave = 'chat/groupleave';
 
 //   ____________________________message_____________________________
-  static const String sendmessage = 'message/send';
-  static const String allmessage = 'message/';
+  static const String sendMessage = 'message/send';
+  static const String allMessage = 'message/';
 
 //   _____________________________khalti________________________________
   static const String khalti = 'payment/initialize_khalti';

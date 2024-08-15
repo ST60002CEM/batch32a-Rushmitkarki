@@ -96,4 +96,9 @@ class AuthRemoteRepository implements IAuthRepository {
   Future<Either<Failure, bool>> googleLogin(String token, String? password) {
     return authRemoteDataSource.googleLogin(token, password);
   }
+
+  @override
+  Future<Either<Failure, List<AuthEntity>>> searchUser(String query) {
+    return authRemoteDataSource.searchUser(query);
+  }
 }

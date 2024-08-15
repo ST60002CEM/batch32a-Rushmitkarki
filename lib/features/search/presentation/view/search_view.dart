@@ -19,7 +19,6 @@ class _SearchViewState extends ConsumerState<SearchView> {
   void initState() {
     super.initState();
 
-    // Add a listener to the scroll controller to detect when the user scrolls to the top
     _scrollController.addListener(() {
       if (_scrollController.offset <=
               _scrollController.position.minScrollExtent &&
@@ -46,7 +45,11 @@ class _SearchViewState extends ConsumerState<SearchView> {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () async {
-              final query = await showSearchDialog(context);
+              final query = await showSearchDialog(context, (value) {
+                ref
+                    .read(searchViewModelProvider.notifier)
+                    .searchDoctors(query: value);
+              });
               if (query != null) {
                 searchViewModel.searchDoctors(query: query);
               }
@@ -95,7 +98,10 @@ class _SearchViewState extends ConsumerState<SearchView> {
     );
   }
 
-  Future<String?> showSearchDialog(BuildContext context) async {
+  Future<String?> showSearchDialog(
+    BuildContext context,
+    Function(String) onChanged,
+  ) async {
     final TextEditingController searchController = TextEditingController();
     return showDialog<String>(
       context: context,
@@ -103,13 +109,16 @@ class _SearchViewState extends ConsumerState<SearchView> {
         return AlertDialog(
           title: const Text('Search'),
           content: TextField(
-            controller: searchController,
             decoration: const InputDecoration(hintText: 'Enter doctor name'),
+            controller: searchController,
           ),
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(searchController.text);
+                ref
+                    .read(searchViewModelProvider.notifier)
+                    .searchDoctors(query: searchController.text);
+                Navigator.of(context).pop();
               },
               child: const Text('Search'),
             ),

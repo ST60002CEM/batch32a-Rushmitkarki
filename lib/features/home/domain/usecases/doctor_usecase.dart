@@ -24,7 +24,7 @@ class DoctorUsecase {
   }
 
   Future<Either<Failure, List<DoctorEntity>>> paginateDoctors(
-      int page, int limit) {
-    return doctorRepository.paginateDoctors(page, limit);
+      int page, int limit, String search) {
+    return doctorRepository.paginateDoctors(page, limit, search);
   }
 }

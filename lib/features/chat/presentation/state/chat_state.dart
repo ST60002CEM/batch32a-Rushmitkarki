@@ -6,12 +6,14 @@ class ChatState {
   final bool isLoading;
   final String? error;
   final AuthEntity? user;
+  final List<AuthEntity> users;
 
   ChatState({
     required this.chats,
     required this.isLoading,
     required this.error,
     required this.user,
+    required this.users,
   });
 
   factory ChatState.initial() => ChatState(
@@ -19,6 +21,7 @@ class ChatState {
         isLoading: false,
         error: null,
         user: null,
+        users: [],
       );
 
   ChatState copyWith({
@@ -26,11 +29,13 @@ class ChatState {
     bool? isLoading,
     String? error,
     AuthEntity? user,
+    List<AuthEntity>? users,
   }) =>
       ChatState(
         chats: chats ?? this.chats,
         isLoading: isLoading ?? this.isLoading,
         error: error ?? this.error,
         user: user ?? this.user,
+        users: users ?? this.users,
       );
 }

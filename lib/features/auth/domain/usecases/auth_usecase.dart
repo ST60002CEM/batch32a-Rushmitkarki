@@ -82,4 +82,8 @@ class AuthUseCase {
   Future<Either<Failure, AuthEntity>> getUserByGoogle(String token) {
     return authRepository.getUserByGoogle(token);
   }
+
+  Future<Either<Failure, List<AuthEntity>>> searchUser(String query) {
+    return authRepository.searchUser(query);
+  }
 }

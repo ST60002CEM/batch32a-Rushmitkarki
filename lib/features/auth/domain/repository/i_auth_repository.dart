@@ -48,4 +48,6 @@ abstract class IAuthRepository {
   Future<Either<Failure, AuthEntity>> getUserByGoogle(String token);
 
   Future<Either<Failure, bool>> googleLogin(String token, String? password);
+
+  Future<Either<Failure, List<AuthEntity>>> searchUser(String query);
 }

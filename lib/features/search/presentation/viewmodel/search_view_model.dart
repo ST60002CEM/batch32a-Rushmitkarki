@@ -17,7 +17,7 @@ class SearchViewModel extends StateNotifier<SearchState> {
 
   Future<void> fetchDoctors() async {
     state = state.copyWith(isLoading: true);
-    final result = await _doctorUsecase.paginateDoctors(state.page, 10);
+    final result = await _doctorUsecase.paginateDoctors(state.page, 10, '');
     result.fold(
       (failure) {
         state = state.copyWith(
@@ -37,11 +37,12 @@ class SearchViewModel extends StateNotifier<SearchState> {
   }
 
   Future<void> searchDoctors({
-    String query = '',
+    String? query,
     String sortOrder = 'asc',
   }) async {
-    state = state.copyWith(isLoading: true, query: query, sortOrder: sortOrder);
-    final result = await _doctorUsecase.paginateDoctors(state.page, 10);
+    state = SearchState.initial();
+    final result =
+        await _doctorUsecase.paginateDoctors(state.page, 10, query ?? '');
     result.fold(
       (failure) {
         state = state.copyWith(
@@ -53,7 +54,7 @@ class SearchViewModel extends StateNotifier<SearchState> {
       (data) {
         // Apply search and sort logic here
         final filteredAndSortedDoctors =
-            applySearchAndSort(data, query, sortOrder);
+            applySearchAndSort(data, query ?? "", sortOrder);
         if (filteredAndSortedDoctors.isEmpty) {
           state = state.copyWith(hasReachedMax: true, isLoading: false);
         } else {
