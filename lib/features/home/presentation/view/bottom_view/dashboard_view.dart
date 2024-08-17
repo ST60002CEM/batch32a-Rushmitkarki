@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:all_sensors2/all_sensors2.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_assignment/app/constants/api_endpoint.dart';
@@ -28,19 +29,19 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
   bool showYesNoDialog = true;
   bool isDialogShowing = false;
 
-  final List<double> _gyroscopeValues = [];
+  late List<double> _gyroscopeValues = [];
   final List<StreamSubscription<dynamic>> _streamSubscription = [];
 
   @override
   void initState() {
     super.initState();
     // Uncomment and modify this if you want to use gyroscope functionality
-    // _streamSubscription.add(gyroscopeEvents!.listen((GyroscopeEvent event) {
-    //   setState(() {
-    //     _gyroscopeValues = <double>[event.x, event.y, event.z];
-    //     _checkGyroscopeValues(_gyroscopeValues);
-    //   });
-    // }));
+    _streamSubscription.add(gyroscopeEvents!.listen((GyroscopeEvent event) {
+      setState(() {
+        _gyroscopeValues = <double>[event.x, event.y, event.z];
+        _checkGyroscopeValues(_gyroscopeValues);
+      });
+    }));
   }
 
   void _checkGyroscopeValues(List<double> values) async {

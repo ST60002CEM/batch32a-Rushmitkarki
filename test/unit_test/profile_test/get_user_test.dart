@@ -23,17 +23,20 @@ void main() {
   late AuthUseCase mockAuthUseCase;
   late ProfileNavigator mockNavigator;
   late UserSharedPrefs mockUserSharedPrefs;
+  late MockGoogleSignInService mockgoogleSignInService;
 
   setUp(() {
     mockAuthUseCase = MockAuthUseCase();
     mockNavigator = MockProfileNavigator();
     mockUserSharedPrefs = MockUserSharedPrefs();
+    mockgoogleSignInService = MockGoogleSignInService();
 
     container = ProviderContainer(overrides: [
       profileViewmodelProvider.overrideWith((ref) => ProfileViewmodel(
           navigator: mockNavigator,
           userSharedPrefs: mockUserSharedPrefs,
-          authUseCase: mockAuthUseCase))
+          authUseCase: mockAuthUseCase,
+          googleSignInService: mockgoogleSignInService))
     ]);
   });
 
@@ -42,10 +45,12 @@ void main() {
       // Mock data
       const authEntity = AuthEntity(
         userId: '123456789123457',
-          fName: 'Rushmit',
-          lName: 'Karki',
-          email: 'karki@gmail.com',
-          password: '12345678');
+        fName: 'Rushmit',
+        lName: 'Karki',
+        email: 'karki@gmail.com',
+        password: '12345678',
+        phone: '1234567890',
+      );
 
       // Stub authUseCase.getCurrentUser()
       when(mockAuthUseCase.getCurrentUser())

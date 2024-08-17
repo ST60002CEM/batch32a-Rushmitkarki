@@ -1,4 +1,3 @@
-import 'package:final_assignment/core/common/show_my_snackbar.dart';
 import 'package:final_assignment/features/appointment/domain/entity/appointment_entity.dart';
 import 'package:final_assignment/features/appointment/domain/usecases/appointment_usecase.dart';
 import 'package:final_assignment/features/appointment/presentation/state/appointment_state.dart';
@@ -27,7 +26,7 @@ class AppointmentViewmodel extends StateNotifier<AppointmentState> {
         state = state.copyWith(
           isLoading: false,
         );
-        showMySnackBar(message: 'Appointment added successfully');
+        // showMySnackBar(message: 'Appointment added successfully');
       },
     );
   }

@@ -4,9 +4,9 @@ class ApiEndPoints {
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
 
-  // static const String baseUrl = 'http://192.168.1.77:5000/api/';
+  static const String baseUrl = 'http://192.168.1.77:5000/api/';
 
-  static const String baseUrl = 'http://192.168.137.1:5000/api/';
+  // static const String baseUrl = 'http://192.168.137.1:5000/api/';
 
   // --------------------------Auth Routes--------------------------
   static const String loginUser = "user/login";
@@ -30,9 +30,9 @@ class ApiEndPoints {
   static const String getDoctors = "doctor/get_all_doctors";
   static const String paginationDoctors = "doctor/pagination";
 
-  // static const String doctorImageUrl = "http://192.168.1.77:5000/doctors/";
+  static const String doctorImageUrl = "http://192.168.1.77:5000/doctors/";
 
-  static const String doctorImageUrl = "http://192.168.137.1:5000/doctors/";
+  // static const String doctorImageUrl = "http://192.168.137.1:5000/doctors/";
 
 // -------------------------------Appointment Route---------------------------
   static const String createAppointment = "booking/create_appointments";
@@ -58,6 +58,7 @@ class ApiEndPoints {
   static const String getInsurance = 'insurance/get_all_insurances';
   static const String getInsuranceById = 'insurance/get_single_insurance';
   static const String deleteInsurance = 'insurance/delete_insurance';
+  static const String insuranceImageUrl = "http://192.168.1.77:5000/insurance/";
 
   //----------------------------chat---------------------------------
   static const String createChat = 'chat/create';

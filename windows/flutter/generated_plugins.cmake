@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   file_selector_windows
+  flutter_any_logo
   local_auth_windows
   permission_handler_windows
   rive_common

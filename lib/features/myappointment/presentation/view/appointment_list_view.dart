@@ -4,11 +4,25 @@ import 'package:intl/intl.dart';
 
 import '../viewmodel/appointment_list_view_model.dart';
 
-class AppointmentListView extends ConsumerWidget {
+class AppointmentListView extends ConsumerStatefulWidget {
   const AppointmentListView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState createState() => _AppointmentListViewState();
+}
+
+class _AppointmentListViewState extends ConsumerState<AppointmentListView> {
+  @override
+  void initState() {
+    Future.microtask(() {
+      ref.read(appointmentListViewModelProvider.notifier).getAppointments();
+    });
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final state = ref.watch(appointmentListViewModelProvider);
 
     return Scaffold(
