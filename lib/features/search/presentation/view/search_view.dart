@@ -138,13 +138,13 @@ class _SearchViewState extends ConsumerState<SearchView> {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                title: const Text('Ascending'),
+                title: const Text('low price'),
                 onTap: () {
                   Navigator.of(context).pop('asc');
                 },
               ),
               ListTile(
-                title: const Text('Descending'),
+                title: const Text('high price'),
                 onTap: () {
                   Navigator.of(context).pop('desc');
                 },

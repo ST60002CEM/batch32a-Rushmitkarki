@@ -8,6 +8,8 @@ import 'dart:io' as _i9;
 
 import 'package:dartz/dartz.dart' as _i4;
 import 'package:final_assignment/core/failure/failure.dart' as _i7;
+import 'package:final_assignment/core/google_service/google_service.dart'
+    as _i15;
 import 'package:final_assignment/core/shared_prefs/user_shared_prefs.dart'
     as _i2;
 import 'package:final_assignment/features/auth/domain/entity/auth_entity.dart'
@@ -18,6 +20,8 @@ import 'package:final_assignment/features/auth/domain/usecases/auth_usecase.dart
     as _i5;
 import 'package:final_assignment/features/auth/presentation/navigator/login_navigator.dart'
     as _i10;
+import 'package:final_assignment/features/forgotpassword/presentation/navigator/forget_password_navigator.dart'
+    as _i16;
 import 'package:local_auth/src/local_auth.dart' as _i11;
 import 'package:local_auth_android/local_auth_android.dart' as _i12;
 import 'package:local_auth_darwin/local_auth_darwin.dart' as _i13;
@@ -449,6 +453,34 @@ class MockAuthUseCase extends _i1.Mock implements _i5.AuthUseCase {
           ),
         )),
       ) as _i6.Future<_i4.Either<_i7.Failure, _i8.AuthEntity>>);
+
+  @override
+  _i6.Future<_i4.Either<_i7.Failure, List<_i8.AuthEntity>>> searchUser(
+          String? query) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #searchUser,
+          [query],
+        ),
+        returnValue:
+            _i6.Future<_i4.Either<_i7.Failure, List<_i8.AuthEntity>>>.value(
+                _FakeEither_2<_i7.Failure, List<_i8.AuthEntity>>(
+          this,
+          Invocation.method(
+            #searchUser,
+            [query],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i6.Future<_i4.Either<_i7.Failure, List<_i8.AuthEntity>>>.value(
+                _FakeEither_2<_i7.Failure, List<_i8.AuthEntity>>(
+          this,
+          Invocation.method(
+            #searchUser,
+            [query],
+          ),
+        )),
+      ) as _i6.Future<_i4.Either<_i7.Failure, List<_i8.AuthEntity>>>);
 }
 
 /// A class which mocks [LoginViewNavigator].
@@ -526,3 +558,52 @@ class MockLocalAuthentication extends _i1.Mock
             _i6.Future<List<_i12.BiometricType>>.value(<_i12.BiometricType>[]),
       ) as _i6.Future<List<_i12.BiometricType>>);
 }
+
+/// A class which mocks [GoogleSignInService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGoogleSignInService extends _i1.Mock
+    implements _i15.GoogleSignInService {
+  @override
+  _i6.Future<_i4.Either<_i7.Failure, Map<String, dynamic>>>
+      signInWithGoogle() => (super.noSuchMethod(
+            Invocation.method(
+              #signInWithGoogle,
+              [],
+            ),
+            returnValue:
+                _i6.Future<_i4.Either<_i7.Failure, Map<String, dynamic>>>.value(
+                    _FakeEither_2<_i7.Failure, Map<String, dynamic>>(
+              this,
+              Invocation.method(
+                #signInWithGoogle,
+                [],
+              ),
+            )),
+            returnValueForMissingStub:
+                _i6.Future<_i4.Either<_i7.Failure, Map<String, dynamic>>>.value(
+                    _FakeEither_2<_i7.Failure, Map<String, dynamic>>(
+              this,
+              Invocation.method(
+                #signInWithGoogle,
+                [],
+              ),
+            )),
+          ) as _i6.Future<_i4.Either<_i7.Failure, Map<String, dynamic>>>);
+
+  @override
+  _i6.Future<void> signOutFromGoogle() => (super.noSuchMethod(
+        Invocation.method(
+          #signOutFromGoogle,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [ForgotPasswordViewNavigator].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockForgotPasswordViewNavigator extends _i1.Mock
+    implements _i16.ForgotPasswordViewNavigator {}

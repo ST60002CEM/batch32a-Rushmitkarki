@@ -76,10 +76,10 @@ class _KhaltiSDKDemoState extends State<KhaltiSDKDemo> {
                 ),
                 const SizedBox(height: 120),
                 const Text(
-                  'Rs. 22',
+                  'RS. 10',
                   style: TextStyle(fontSize: 25),
                 ),
-                const Text('1 day fee'),
+                const Text('insurance per month'),
                 OutlinedButton(
                   onPressed: () => khaltiSnapshot.open(context),
                   child: const Text('Pay with Khalti'),
@@ -92,9 +92,6 @@ class _KhaltiSDKDemoState extends State<KhaltiSDKDemo> {
                       )
                     : Column(
                         children: [
-                          Text(
-                            'pidx: ${paymentResult!.payload?.pidx}',
-                          ),
                           Text('Status: ${paymentResult!.payload?.status}'),
                           Text(
                             'Amount Paid: ${paymentResult!.payload?.totalAmount}',

@@ -3,6 +3,7 @@ import 'package:final_assignment/features/auth/presentation/viewmodel/login_view
 import 'package:final_assignment/features/forgotpassword/presentation/navigator/forget_password_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -20,128 +21,109 @@ class _LoginViewState extends ConsumerState<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Login to explore..',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 12, 41, 91),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 7,
-            child: SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(25.0, 50.0, 25.0, 20.0),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40.0),
-                    topRight: Radius.circular(40.0),
-                  ),
-                ),
-                child: Form(
-                  key: _formSignInKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/logo.png',
-                        height: 80,
-                      ),
-                      const SizedBox(
-                        height: 1.0,
-                      ),
-                      const SizedBox(
-                        height: 40.0,
-                      ),
-                      TextFormField(
-                        controller: _emailController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter Email';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          label: Text(
-                            'Email',
-                          ),
-                          hintText: 'Enter Email',
-                          prefixIcon: Icon(Icons.email),
-                          hintStyle: TextStyle(
-                            color: Colors.black26,
-                          ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: _formSignInKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 20),
+                        Image.asset(
+                          'assets/images/logo.png',
+                          height: 80,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        obscuringCharacter: '*',
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter Password';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          label: Text('Password'),
-                          hintText: 'Enter Password',
-                          prefixIcon: Icon(Icons.lock),
-                          hintStyle: TextStyle(
-                            color: Colors.black26,
-                          ),
+                        const SizedBox(height: 20),
+                        Text(
+                          'Login to explore...',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: const Color.fromARGB(255, 12, 41, 91),
+                              ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: rememberPassword,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    rememberPassword = value!;
-                                  });
-                                },
-                                // activeColor: lightColorScheme.primary,
-                                focusColor: Colors.black,
-                              ),
-                              const Text(
-                                'Remember me',
-                              ),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              ref
-                                  .read(forgetPasswordViewNavigatorProvider)
-                                  .openForgotPasswordView();
-                            },
-                            child: const Text(
-                              'Forget password?',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.blue,
-                              ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          controller: _emailController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Email';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            hintText: 'Enter Email',
+                            prefixIcon: const Icon(Icons.email),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
+                        ),
+                        const SizedBox(height: 16),
+                        TextFormField(
+                          controller: _passwordController,
+                          obscureText: true,
+                          obscuringCharacter: '*',
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter Password';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            hintText: 'Enter Password',
+                            prefixIcon: const Icon(Icons.lock),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: rememberPassword,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      rememberPassword = value!;
+                                    });
+                                  },
+                                  activeColor:
+                                      const Color.fromARGB(255, 12, 41, 91),
+                                ),
+                                const Text('Remember me'),
+                              ],
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                ref
+                                    .read(forgetPasswordViewNavigatorProvider)
+                                    .openForgotPasswordView();
+                              },
+                              child: const Text(
+                                'Forget password?',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 12, 41, 91),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
                           onPressed: () {
                             if (_formSignInKey.currentState!.validate() &&
                                 rememberPassword) {
@@ -151,17 +133,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
                                     _emailController.text,
                                     _passwordController.text,
                                   );
-
-                              // Check if email and password match admin credentials
-
-                              // Navigate to dashboard screen if credentials match
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) =>
-                              //         const DashboardScreen(),
-                              //   ),
-                              // );
                             } else if (!rememberPassword) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -171,109 +142,98 @@ class _LoginViewState extends ConsumerState<LoginView> {
                               );
                             }
                           },
-                          child: const Text('Login'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                const Color.fromARGB(255, 12, 41, 91),
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text('Login',
+                              style: TextStyle(fontSize: 16)),
                         ),
-                      ),
-                      // ============================== Sensor for biometric =======================
-                      Center(
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.fingerprint,
-                          ),
-                          onPressed: () {
-                            ref
-                                .read(authViewModelProvider.notifier)
-                                .fingerPrintLogin();
-                          },
-                        ),
-                      ),
-
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Don\'t have an account? ',
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              ref
-                                  .read(loginViewModelProvider.notifier)
-                                  .openRegisterView();
-                            },
-                            child: const Text(
-                              'Sign up',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                // color: lightColorScheme.primary,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal: 10,
-                            ),
-                            child: Text(
-                              'Continue with',
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.7,
-                              color: Colors.grey.withOpacity(0.5),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
+                        const SizedBox(height: 16),
+                        Center(
+                          child: IconButton(
+                            icon: const Icon(Icons.fingerprint, size: 40),
+                            onPressed: () {
                               ref
                                   .read(authViewModelProvider.notifier)
-                                  .googleSignIn();
+                                  .fingerPrintLogin();
                             },
-                            child: const Row(
-                              children: [
-                                Icon(
-                                  Icons.mail,
-                                  color: Colors.red,
-                                ),
-                                SizedBox(width: 8),
-                                Text('Sign in with Google'),
-                              ],
-                            ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 25.0,
-                      ),
-                    ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Don't have an account? "),
+                            GestureDetector(
+                              onTap: () {
+                                ref
+                                    .read(loginViewModelProvider.notifier)
+                                    .openRegisterView();
+                              },
+                              child: const Text(
+                                'Sign up',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 12, 41, 91),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Column(
+                  children: [
+                    Row(
+                      children: const [
+                        Expanded(child: Divider()),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'Or continue with',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Expanded(child: Divider()),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        ref.read(authViewModelProvider.notifier).googleSignIn();
+                      },
+                      icon: const FaIcon(FontAwesomeIcons.google,
+                          color: Colors.red),
+                      label: const Text('Sign in with Google'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black,
+                        side: const BorderSide(color: Colors.grey),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

@@ -44,11 +44,11 @@ class AuthViewModel extends StateNotifier<AuthState> {
     data.fold(
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);
-        // showMySnackBar(message: l.error, color: Colors.red);
+        showMySnackBar(message: l.error, color: Colors.red);
       },
       (r) {
         state = state.copyWith(isLoading: false);
-        //showMySnackBar(message: 'Registered');
+        showMySnackBar(message: 'Registered');
       },
     );
   }
@@ -59,12 +59,12 @@ class AuthViewModel extends StateNotifier<AuthState> {
     data.fold(
       (l) {
         state = state.copyWith(isLoading: false, error: l.error);
-        // showMySnackBar(message: l.error, color: Colors.red);
+        showMySnackBar(message: l.error, color: Colors.red);
       },
       (r) {
         state = state.copyWith(isLoading: false);
-        // showMySnackBar(
-        //     message: 'User Logged In Successfully', color: Colors.green);
+        showMySnackBar(
+            message: 'User Logged In Successfully', color: Colors.green);
         navigator.openHomeView();
       },
     );
@@ -120,7 +120,7 @@ class AuthViewModel extends StateNotifier<AuthState> {
       },
       (success) {
         state = state.copyWith(isLoading: false, error: null);
-        // showMySnackBar(message: "Successfully logged in");
+        showMySnackBar(message: "Successfully logged in");
         navigator.openHomeView();
       },
     );

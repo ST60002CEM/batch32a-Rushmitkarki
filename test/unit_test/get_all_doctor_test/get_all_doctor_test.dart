@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:final_assignment/core/failure/failure.dart';
+import 'package:final_assignment/features/favouritedoctors/domain/usecases/favourite_doctors_usecase.dart';
 import 'package:final_assignment/features/home/domain/entity/doctor_entity.dart';
 import 'package:final_assignment/features/home/domain/usecases/doctor_usecase.dart';
 import 'package:final_assignment/features/home/presentation/viewmodel/doctor_view_model.dart';
@@ -8,21 +9,27 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'doctor_pagination_test.mocks.dart';
+import 'get_all_doctor_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<DoctorUsecase>()])
+@GenerateNiceMocks([
+  MockSpec<DoctorUsecase>(),
+  MockSpec<FavouriteDoctorsUseCase>(),
+])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late MockDoctorUsecase mockDoctorUsecase;
+  late FavouriteDoctorsUseCase mockFavouriteDoctorsUseCase;
   late ProviderContainer container;
 
   setUp(() {
     mockDoctorUsecase = MockDoctorUsecase();
+    mockFavouriteDoctorsUseCase = MockFavouriteDoctorsUseCase();
 
     container = ProviderContainer(
       overrides: [
         doctorViewModelProvider.overrideWith(
-          (ref) => DoctorViewModel(mockDoctorUsecase),
+          (ref) =>
+              DoctorViewModel(mockDoctorUsecase, mockFavouriteDoctorsUseCase),
         ),
       ],
     );
@@ -33,16 +40,16 @@ void main() {
     final doctorsList = List<DoctorEntity>.generate(
       6,
       (index) => DoctorEntity(
-        doctorid: index.toString(),
-        doctorName: 'Doctor $index',
-        doctorField: 'Field $index',
-        doctorExperience: '${index + 1} years',
-        doctorFee: '${index * 10} USD',
-        doctorImage: 'image_$index.png',
+        doctorid: "123",
+        doctorName: "safasl",
+        doctorField: "market",
+        doctorExperience: "10",
+        doctorFee: "100",
+        doctorImage: "1000000",
       ),
     );
 
-    when(mockDoctorUsecase.paginateDoctors(1, 6))
+    when(mockDoctorUsecase.paginateDoctors(1, 6, "first"))
         .thenAnswer((_) async => Future.value(Right(doctorsList)));
 
     await container.read(doctorViewModelProvider.notifier).getDoctors();
@@ -50,7 +57,7 @@ void main() {
     expect(
         container.read(doctorViewModelProvider).doctors, equals(doctorsList));
 
-    verify(mockDoctorUsecase.paginateDoctors(1, 6)).called(1);
+    verify(mockDoctorUsecase.paginateDoctors(1, 6, "second")).called(1);
   });
 
   test('DoctorViewModel getAllDoctors failure test', () async {
@@ -59,7 +66,7 @@ void main() {
     // Mock failure for getAllDoctors
     final failure = Failure(error: 'Failed to fetch doctors');
 
-    when(mockDoctorUsecase.paginateDoctors(any, any))
+    when(mockDoctorUsecase.paginateDoctors(any, any, any))
         .thenAnswer((_) async => Future.value(
               Left(failure),
             ));
@@ -76,16 +83,16 @@ void main() {
     final doctorsList = List<DoctorEntity>.generate(
       6,
       (index) => DoctorEntity(
-        doctorid: index.toString(),
-        doctorName: 'Doctor $index',
-        doctorField: 'Field $index',
-        doctorExperience: '${index + 1} years',
-        doctorFee: '${index * 10} USD',
-        doctorImage: 'image_$index.png',
+        doctorid: "123",
+        doctorName: "safasl",
+        doctorField: "market",
+        doctorExperience: "10",
+        doctorFee: "100",
+        doctorImage: "1000000",
       ),
     );
 
-    when(mockDoctorUsecase.paginateDoctors(any, any))
+    when(mockDoctorUsecase.paginateDoctors(any, any, any))
         .thenAnswer((_) async => Future.value(Right(doctorsList)));
     final doctorViewModel = container.read(doctorViewModelProvider.notifier);
 
@@ -93,17 +100,17 @@ void main() {
     final doctorsPage1 = List<DoctorEntity>.generate(
       6,
       (index) => DoctorEntity(
-        doctorid: index.toString(),
-        doctorName: 'Doctor $index',
-        doctorField: 'Field $index',
-        doctorExperience: '${index + 1} years',
-        doctorFee: '${index * 10} USD',
-        doctorImage: 'image_$index.png',
+        doctorid: "123",
+        doctorName: "safasl",
+        doctorField: "market",
+        doctorExperience: "10",
+        doctorFee: "100",
+        doctorImage: "1000000",
       ),
     );
 
     // Set up the mock to return paginated data for page 1
-    when(mockDoctorUsecase.paginateDoctors(1, 6)).thenAnswer(
+    when(mockDoctorUsecase.paginateDoctors(1, 6, "first")).thenAnswer(
       (_) async => Right(doctorsPage1),
     );
 
@@ -113,6 +120,6 @@ void main() {
         container.read(doctorViewModelProvider).doctors, equals(doctorsPage1));
 
     // Verify the usecase method was called with correct parameters
-    verify(mockDoctorUsecase.paginateDoctors(1, 6)).called(1);
+    verify(mockDoctorUsecase.paginateDoctors(1, 6, "first")).called(1);
   });
 }

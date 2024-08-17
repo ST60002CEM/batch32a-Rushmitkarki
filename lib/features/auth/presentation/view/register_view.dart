@@ -41,141 +41,88 @@ class _RegisterScreenState extends ConsumerState<RegisterView> {
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 12, 41, 91),
       ),
-      body: Column(
-        children: <Widget>[
-          Center(
-            // Wrap the Image.asset with Center
-            child: Image.asset(
-              'assets/images/logo.png',
-              width: 100.0,
-              height: 100.0,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SingleChildScrollView(
-                child: Form(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextField(
-                        controller: firstNameController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "First Name",
-                          prefixIcon: const Icon(Icons.person),
-                          fillColor: Colors.white70,
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextField(
-                        controller: lastNameController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "Last Name",
-                          prefixIcon: const Icon(Icons.person),
-                          fillColor: Colors.white70,
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "Email",
-                          prefixIcon: const Icon(Icons.email),
-                          fillColor: Colors.white70,
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextField(
-                        controller: phoneNumberController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "Phone Number",
-                          prefixIcon: const Icon(Icons.phone),
-                          fillColor: Colors.white70,
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextField(
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "Password",
-                          prefixIcon: const Icon(Icons.lock),
-                          fillColor: Colors.white70,
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      TextField(
-                        controller: confirmPasswordController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          hintStyle: TextStyle(color: Colors.grey[800]),
-                          hintText: "Confirm Password",
-                          prefixIcon: const Icon(Icons.lock),
-                          fillColor: Colors.white70,
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Handle registration logic here
-                          AuthEntity authEntity = AuthEntity(
-                            fName: firstNameController.text,
-                            lName: lastNameController.text,
-                            email: emailController.text,
-                            phone: phoneNumberController.text,
-                            password: passwordController.text,
-                          );
-
-                          ref
-                              .read(authViewModelProvider.notifier)
-                              .registerUser(authEntity);
-                        },
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      const SizedBox(height: 20.0),
-                      const Divider(
-                        thickness: 1,
-                      ),
-                      const SizedBox(height: 20.0),
-                    ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 20),
+              Image.asset(
+                'assets/images/logo.png',
+                width: 100.0,
+                height: 100.0,
+              ),
+              const SizedBox(height: 30),
+              _buildTextField(firstNameController, "First Name", Icons.person),
+              const SizedBox(height: 20.0),
+              _buildTextField(lastNameController, "Last Name", Icons.person),
+              const SizedBox(height: 20.0),
+              _buildTextField(emailController, "Email", Icons.email),
+              const SizedBox(height: 20.0),
+              _buildTextField(
+                  phoneNumberController, "Phone Number", Icons.phone),
+              const SizedBox(height: 20.0),
+              _buildTextField(passwordController, "Password", Icons.lock,
+                  isPassword: true),
+              const SizedBox(height: 20.0),
+              _buildTextField(
+                  confirmPasswordController, "Confirm Password", Icons.lock,
+                  isPassword: true),
+              const SizedBox(height: 30.0),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _handleRegistration,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 12, 41, 91),
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Register',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),
-            ),
+              const SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
+            ],
           ),
-        ],
+        ),
       ),
     );
+  }
+
+  Widget _buildTextField(
+      TextEditingController controller, String hint, IconData icon,
+      {bool isPassword = false}) {
+    return TextField(
+      controller: controller,
+      obscureText: isPassword,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        filled: true,
+        hintStyle: TextStyle(color: Colors.grey[800]),
+        hintText: hint,
+        prefixIcon: Icon(icon),
+        fillColor: Colors.white70,
+      ),
+    );
+  }
+
+  void _handleRegistration() {
+    AuthEntity authEntity = AuthEntity(
+      fName: firstNameController.text,
+      lName: lastNameController.text,
+      email: emailController.text,
+      phone: phoneNumberController.text,
+      password: passwordController.text,
+    );
+
+    ref.read(authViewModelProvider.notifier).registerUser(authEntity);
   }
 }
